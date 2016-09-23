@@ -1,4 +1,4 @@
-/// <reference path="verse.d.ts" />
+/// <reference path="topic.d.ts" />
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,17 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var TopicComponent = (function () {
-    function TopicComponent() {
+var TOPICS = [{
+        id: 1,
+        name: 'test topic',
+        slug: 'test-topic'
+    }];
+var TopicService = (function () {
+    function TopicService() {
     }
-    TopicComponent = __decorate([
-        core_1.Component({
-            selector: 'moc-topic',
-            templateUrl: 'app/topic/topic.component.html'
-        }), 
+    TopicService.prototype.getTopics = function () {
+        // use ajax to get all topics (tags)
+        // save raw data
+        // populate Topic type with name, id, slug
+        // return list of processed topics
+        return Promise.resolve(TOPICS);
+    };
+    TopicService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], TopicComponent);
-    return TopicComponent;
+    ], TopicService);
+    return TopicService;
 }());
-exports.TopicComponent = TopicComponent;
-//# sourceMappingURL=topic.component.js.map
+exports.TopicService = TopicService;
+//# sourceMappingURL=topic.service.js.map

@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var app_component_1 = require('./app.component');
-var topic_component_1 = require('./topic/topic.component');
+var topics_component_1 = require('./topics/topics.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -20,7 +20,7 @@ var AppModule = (function () {
             imports: [platform_browser_1.BrowserModule],
             declarations: [
                 app_component_1.AppComponent,
-                topic_component_1.TopicComponent
+                topics_component_1.TopicsComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
