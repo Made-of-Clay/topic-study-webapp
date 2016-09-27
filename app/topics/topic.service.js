@@ -45,8 +45,22 @@ var TopicService = (function () {
     return TopicService;
 }());
 exports.TopicService = TopicService;
-function processApiData(topic) {
-    console.log(topic);
-    return topic;
+function processApiData(topics) {
+    var procTopic = [];
+    var props = ['id', 'count', 'name', 'slug'];
+    topics.forEach(function (topic) {
+        var tmpObj = { id: null, count: null, name: '', slug: '' };
+        for (var prop in topic) {
+            if (inArray(props, prop)) {
+                tmpObj[prop] = topic[prop];
+            }
+        }
+        procTopic.push(tmpObj);
+    });
+    console.log(procTopic);
+    return topics;
+}
+function inArray(haystack, needle) {
+    return haystack.indexOf(needle) > -1;
 }
 //# sourceMappingURL=topic.service.js.map
