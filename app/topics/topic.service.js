@@ -21,16 +21,14 @@ var TopicService = (function () {
     function TopicService(http) {
         this.http = http;
         this.topicUrl = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
+        console.log('topicservice constructed');
     }
     TopicService.prototype.getTopics = function () {
-        // use ajax to get all topics (tags)
-        // save raw data
-        // populate Topic type with name, id, slug
-        // return list of processed topics
-        // return Promise.resolve(TOPICS);
+        var _this = this;
         return this.http.get(this.topicUrl + '/tags')
             .toPromise()
             .then(function (response) { return response.json(); })
+            .then(function (topics) { return _this._rawData = topics; })
             .then(processApiData)
             .catch(this.handleError);
     };
@@ -38,6 +36,13 @@ var TopicService = (function () {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
+    Object.defineProperty(TopicService.prototype, "rawData", {
+        get: function () {
+            return this._rawData;
+        },
+        enumerable: true,
+        configurable: true
+    });
     TopicService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

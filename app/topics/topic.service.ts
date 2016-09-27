@@ -14,26 +14,28 @@ const TOPICS = [{
 @Injectable()
 
 export class TopicService {
-    private topicUrl = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
+    private topicUrl: string = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
+    private _rawData;
 
-    constructor(private http: Http) {}
+    constructor(private http: Http) {
+        console.log('topicservice constructed');
+    }
 
     getTopics(): Promise<Topic[]> {
-        // use ajax to get all topics (tags)
-        // save raw data
-        // populate Topic type with name, id, slug
-        // return list of processed topics
-
-        // return Promise.resolve(TOPICS);
         return this.http.get(this.topicUrl+'/tags')
             .toPromise()
             .then(response => response.json() as Topic[])
+            .then(topics => this._rawData = topics)
             .then(processApiData)
             .catch(this.handleError);
     }
     private handleError(error): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
+    }
+
+    get rawData() {
+        return this._rawData;
     }
 }
 function processApiData(topics: Topic[]) {
