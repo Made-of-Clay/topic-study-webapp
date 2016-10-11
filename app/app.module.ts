@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { TopicComponent } from './topic/topic.component';
+import { TopicsComponent } from './topics/topics.component';
+import { TopicService } from './topics/topic.service';
 
 @NgModule({
-    imports: [ BrowserModule ],
+    imports: [
+        BrowserModule,
+        HttpModule
+    ],
     declarations: [
         AppComponent,
-        TopicComponent
+        TopicsComponent
+    ],
+    providers: [
+        TopicService
     ],
     bootstrap: [ AppComponent ]
 })
