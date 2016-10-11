@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var Rx_1 = require('rxjs/Rx');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/catch');
 require('rxjs/add/operator/toPromise'); // ????
 var TOPICS = [{
         id: 1,
@@ -23,6 +26,13 @@ var TopicService = (function () {
         this.topicUrl = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
         console.log('topicservice constructed');
     }
+    Object.defineProperty(TopicService.prototype, "rawData", {
+        get: function () {
+            return this._rawData;
+        },
+        enumerable: true,
+        configurable: true
+    });
     TopicService.prototype.getTopics = function () {
         var _this = this;
         return this.http.get(this.topicUrl + '/tags')
@@ -36,13 +46,12 @@ var TopicService = (function () {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
-    Object.defineProperty(TopicService.prototype, "rawData", {
-        get: function () {
-            return this._rawData;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    TopicService.prototype.getTopicList = function (slug) {
+        console.log('get topic list (service)');
+        var quote = this.topicUrl + '/quotes?filter[tag]=';
+        var verse = this.topicUrl + '/verses?filter[tag]=';
+        return Rx_1.Observable.forkJoin(this.http.get(quote + slug).map(function (res) { return res.json(); }), this.http.get(verse + slug).map(function (res) { return res.json(); }));
+    };
     TopicService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

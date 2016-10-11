@@ -20,8 +20,19 @@ var TopicsComponent = (function () {
     };
     TopicsComponent.prototype.getTopics = function () {
         var _this = this;
+        if (this.topics === undefined) {
+            this.topicService.getTopics().then(function (topics) { return _this.topics = topics; });
+        }
         // this.topics = this.topicService.getTopics();
-        this.topicService.getTopics().then(function (topics) { return _this.topics = topics; });
+    };
+    // get all topics from TopicService
+    // pass list of topics (tags) into view
+    // loop list of topics creating multiple topiclists
+    TopicsComponent.prototype.getTopicList = function (slug) {
+        console.log('get topic list');
+        this.topicService.getTopicList(slug).map(function (x) {
+            console.log('x', x);
+        });
     };
     TopicsComponent = __decorate([
         core_1.Component({

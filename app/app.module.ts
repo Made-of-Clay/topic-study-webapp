@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { TopicsComponent } from './topics/topics.component';
+import { TopicListComponent } from './topics/topic-list.component';
 import { TopicService } from './topics/topic.service';
 
 @NgModule({

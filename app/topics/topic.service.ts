@@ -1,7 +1,10 @@
 /// <reference path="topic.d.ts" />
 
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import 'rxjs/add/operator/toPromise'; // ????
 
@@ -16,6 +19,10 @@ const TOPICS = [{
 export class TopicService {
     private topicUrl: string = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
     private _rawData;
+
+    get rawData() {
+        return this._rawData;
+    }
 
     constructor(private http: Http) {
         console.log('topicservice constructed');
@@ -34,8 +41,14 @@ export class TopicService {
         return Promise.reject(error.message || error);
     }
 
-    get rawData() {
-        return this._rawData;
+    getTopicList(slug: string) {
+        console.log('get topic list (service)');
+        let quote = this.topicUrl+'/quotes?filter[tag]=';
+        let verse = this.topicUrl+'/verses?filter[tag]=';
+        return Observable.forkJoin(
+            this.http.get(quote + slug).map((res: Response) => res.json()),
+            this.http.get(verse + slug).map((res: Response) => res.json())
+        );
     }
 }
 function processApiData(topics: Topic[]) {
