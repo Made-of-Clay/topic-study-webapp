@@ -16,3 +16,22 @@ Tags are the topics that will be studied. I've chosen to organize the data this 
 ### Planned Post Types
 - verses
 - quotes
+
+### Hierarchy Notes
+#### Topics
+- Prayer
+- Holy Spirit
+
+#### Verses/Quotes (VQs)
+- John 3:16
+
+#### Verse/Quote (VQ)
+- "For God so loved the world that He gave..."
+
+### General Steps
+1. Show list of topics
+2. Click topic for list (data fetch or cached)
+3. Show (fetched) list of verses/quotes
+4. Click verse (data fetch or cached)
+5. Navigate to verse detail (ref, txt)
+6. Offer back btn/link (eventually other vq in topic)
