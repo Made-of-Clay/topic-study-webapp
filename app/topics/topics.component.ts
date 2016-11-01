@@ -1,6 +1,7 @@
 /// <reference path="topic.d.ts" />
 
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { TopicService } from './topic.service';
 import { TopicListComponent } from './topic-list.component';
 
@@ -14,6 +15,7 @@ import { TopicListComponent } from './topic-list.component';
 
 export class TopicsComponent implements OnInit {
     topics: Topic[];
+    searchTerm: string;
 
     constructor(private topicService: TopicService) {}
 
