@@ -1,11 +1,14 @@
 <!-- pass filter value to .topic-name -->
 <div class="topic-search-filter">
-    <!-- <input [(ngModel)]="searchTerm" type="text"> -->
+    <input [(ngModel)]="searchTerm" type="text">
+    <hr> {{searchTerm}}
 </div>
 
 <div *ngFor="let topic of topics">
     <!-- *ngIf="searchTerm"  (will this hide unless search matches? How do I show all but hide when searchTerm is truthy?) -->
-    <div class="topic-name topic-{{topic.slug}}" (click)="getTopicList(topic.slug)">
+    <div class="topic-name topic-{{topic.slug}}"
+        *ngIf="filterTopic(searchTerm, topic.slug, topic.name)"
+        (click)="getTopicList(topic.slug)">
         {{topic.name}} ({{topic.count}})
     </div>
     <!-- <moc-topic-list>Loading List...</moc-topic-list> -->

@@ -34,6 +34,15 @@ var TopicsComponent = (function () {
             console.log('x', x);
         });
     };
+    TopicsComponent.prototype.filterTopic = function (searched, slug, name) {
+        if (searched === void 0) { searched = ''; }
+        if (searched) {
+            return !!(slug.match(searched) || slug.match(name));
+        }
+        else {
+            return true;
+        }
+    };
     TopicsComponent = __decorate([
         core_1.Component({
             selector: 'moc-topics',

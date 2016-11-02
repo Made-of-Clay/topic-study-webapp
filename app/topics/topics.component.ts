@@ -1,7 +1,6 @@
 /// <reference path="topic.d.ts" />
 
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { TopicService } from './topic.service';
 import { TopicListComponent } from './topic-list.component';
 
@@ -37,5 +36,13 @@ export class TopicsComponent implements OnInit {
         this.topicService.getTopicList(slug).map(x => {
             console.log('x', x);
         });
+    }
+
+    filterTopic(searched: string = '', slug: string, name: string): boolean {
+        if (searched) {
+            return !!(slug.match(searched) || slug.match(name));
+        } else {
+            return true;
+        }
     }
 }
