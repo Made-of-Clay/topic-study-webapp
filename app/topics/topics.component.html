@@ -1,7 +1,8 @@
 <!-- pass filter value to .topic-name -->
 <div class="topic-search-filter">
-    <input [(ngModel)]="searchTerm" type="text">
-    <hr> {{searchTerm}}
+    <input [(ngModel)]="searchTerm" type="text" placeholder="Filter Topics"><br>
+    {{searchTerm}}
+    <hr>
 </div>
 
 <div *ngFor="let topic of topics">

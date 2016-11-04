@@ -42,7 +42,7 @@ export class TopicService {
     }
 
     getTopicList(slug: string) {
-        console.log('get topic list (service)');
+console.log('get topic list (service): slug passed was "%s"', slug);
         let quote = this.topicUrl+'/quotes?filter[tag]=';
         let verse = this.topicUrl+'/verses?filter[tag]=';
         return Observable.forkJoin(
@@ -63,7 +63,7 @@ function processApiData(topics: Topic[]) {
         }
         procTopic.push(tmpObj);
     });
-    console.log(procTopic);
+console.log('processed topics: ', procTopic);
     return topics;
 }
 function inArray(haystack:any[], needle: any): boolean {

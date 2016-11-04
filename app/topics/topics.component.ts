@@ -32,7 +32,6 @@ export class TopicsComponent implements OnInit {
     // pass list of topics (tags) into view
     // loop list of topics creating multiple topiclists
     getTopicList(slug: string) {
-        console.log('get topic list');
         this.topicService.getTopicList(slug).map(x => {
             console.log('x', x);
         });

@@ -47,7 +47,7 @@ var TopicService = (function () {
         return Promise.reject(error.message || error);
     };
     TopicService.prototype.getTopicList = function (slug) {
-        console.log('get topic list (service)');
+        console.log('get topic list (service): slug passed was "%s"', slug);
         var quote = this.topicUrl + '/quotes?filter[tag]=';
         var verse = this.topicUrl + '/verses?filter[tag]=';
         return Rx_1.Observable.forkJoin(this.http.get(quote + slug).map(function (res) { return res.json(); }), this.http.get(verse + slug).map(function (res) { return res.json(); }));
@@ -71,7 +71,7 @@ function processApiData(topics) {
         }
         procTopic.push(tmpObj);
     });
-    console.log(procTopic);
+    console.log('processed topics: ', procTopic);
     return topics;
 }
 function inArray(haystack, needle) {
