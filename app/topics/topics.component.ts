@@ -32,8 +32,8 @@ export class TopicsComponent implements OnInit {
     // loop list of topics creating multiple topiclists
     getTopicList(slug: string) {
         console.log('get topic list');
-        this.topicService.getTopicList(slug).map(x => {
-            console.log('x', x);
-        });
+        this.topicService.getTopicList(slug)/*.subscribe(data => {
+            console.log('data', data);
+        })*/;
     }
 }

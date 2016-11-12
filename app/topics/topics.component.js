@@ -30,9 +30,9 @@ var TopicsComponent = (function () {
     // loop list of topics creating multiple topiclists
     TopicsComponent.prototype.getTopicList = function (slug) {
         console.log('get topic list');
-        this.topicService.getTopicList(slug).map(function (x) {
-            console.log('x', x);
-        });
+        this.topicService.getTopicList(slug) /*.subscribe(data => {
+            console.log('data', data);
+        })*/;
     };
     TopicsComponent = __decorate([
         core_1.Component({

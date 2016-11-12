@@ -47,10 +47,82 @@ var TopicService = (function () {
         return Promise.reject(error.message || error);
     };
     TopicService.prototype.getTopicList = function (slug) {
+        // ajax quote - save
+        // ajax verse - save
+        // return once both data sets fetched
+        // var url_quotes = this.buildUrl(slug, 'quotes');
+        // var url_verses = this.buildUrl(slug, 'verses');
+        // var remoteData = {
+        //     verses: null,
+        //     quotes: null
+        // };
+        // var promise = new Promise((resolve, reject) => {
+        //     // run both ajax things
+        //     this.getPostType('quotes', url_quotes)
+        //         .then((response: Response) => checker('quotes', response.json()) )
+        //         .then(checker)
+        //     ;
+        // });
+        // this.http.get(url_verses)
+        //     .toPromise()
+        //     .then(response => {
+        //         console.log('verse response', response);
+        //         let data = response.json();
+        //         if (data.ok) {
+        //             remoteData.verses = data;
+        //         }
+        //     })
+        //     .catch(this.handleError)
+        // ;
+        // var handlerCallback = fetchTopicListCallback(this);
+        // this.http.get(url_quotes)
+        //     .toPromise()
+        //     .then(response => {
+        //         console.log('quote response', response);
+        //         let data = response.json();
+        //         if (data.ok) {
+        //             remoteData.quotes = data;
+        //         }
+        //     })
+        //     .catch(handlerCallback)
+        // ;
+        // function setData(which: string, data) {
+        //     remoteData[which] = data;
+        // }
+        // function checker() {
+        //     for (let key in remoteData) {
+        //         ;
+        //     }
+        // }
+    };
+    TopicService.prototype.getPostType = function (type, url) {
+        return this.http.get(url)
+            .toPromise()
+            .then(something)
+            .catch(something);
+        function something(response) {
+            var data = response.json();
+            if (data.response) {
+                return data;
+            }
+            else {
+                throw 'Request Failed';
+            }
+        }
+    };
+    TopicService.prototype.handlePostResponse = function (response) {
+        console.info('response', response);
+        console.info('this', this);
+    };
+    TopicService.prototype.buildUrl = function (slug, which) {
+        return this.topicUrl + "/" + which + "?filter[tag]=" + slug;
+    };
+    TopicService.prototype.getTopicList2 = function (slug) {
         console.log('get topic list (service)');
         var quote = this.topicUrl + '/quotes?filter[tag]=';
         var verse = this.topicUrl + '/verses?filter[tag]=';
-        return Rx_1.Observable.forkJoin(this.http.get(quote + slug).map(function (res) { return res.json(); }), this.http.get(verse + slug).map(function (res) { return res.json(); }));
+        var o = Rx_1.Observable.forkJoin(this.http.get(quote + slug).map(function (res) { return res.json(); }), this.http.get(verse + slug).map(function (res) { return res.json(); }));
+        return o;
     };
     TopicService = __decorate([
         core_1.Injectable(), 
@@ -76,5 +148,16 @@ function processApiData(topics) {
 }
 function inArray(haystack, needle) {
     return haystack.indexOf(needle) > -1;
+}
+function fetchTopicListCallback(service) {
+    return function handleTopicListResponse(response) {
+        var data = response.json();
+        if (response.ok) {
+            service.handlePost(data);
+        }
+        else {
+            console.error('%cAjax Error', 'font-weight:bold', response.status + ": " + response.statusText);
+        }
+    };
 }
 //# sourceMappingURL=topic.service.js.map
