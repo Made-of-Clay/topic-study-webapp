@@ -29,8 +29,12 @@ var TopicsComponent = (function () {
     // pass list of topics (tags) into view
     // loop list of topics creating multiple topiclists
     TopicsComponent.prototype.getTopicList = function (slug) {
-        this.topicService.getTopicList(slug).map(function (x) {
-            console.log('x', x);
+        this.topicService.getTopicList(slug)
+            .then(function (data) {
+            console.log('data', data);
+        })
+            .catch(function (error) {
+            console.log('error', error);
         });
     };
     TopicsComponent.prototype.filterTopic = function (searched, slug, name) {

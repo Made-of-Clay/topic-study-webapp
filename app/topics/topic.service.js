@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var Rx_1 = require('rxjs/Rx');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
 require('rxjs/add/operator/toPromise'); // ????
@@ -48,9 +47,50 @@ var TopicService = (function () {
     };
     TopicService.prototype.getTopicList = function (slug) {
         console.log('get topic list (service): slug passed was "%s"', slug);
-        var quote = this.topicUrl + '/quotes?filter[tag]=';
-        var verse = this.topicUrl + '/verses?filter[tag]=';
-        return Rx_1.Observable.forkJoin(this.http.get(quote + slug).map(function (res) { return res.json(); }), this.http.get(verse + slug).map(function (res) { return res.json(); }));
+        var quote = this.topicUrl + '/quotes?filter[tag]=' + slug;
+        var verse = this.topicUrl + '/verses?filter[tag]=' + slug;
+        var self = this;
+        // return Observable.forkJoin(
+        //     this.http.get(quote + slug).map((res: Response) => res.json()),
+        //     this.http.get(verse + slug).map((res: Response) => res.json())
+        // );
+        //////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////
+        // ::: HERE ADAM - resolve and reject are nothing right now
+        //     figure out what should be inside and pass to Promise;
+        //     currently. topiclistPromise is a function that needs
+        //     run with two params (resolve and reject); maybe I need
+        //     to reorder logic *inside* the Promise
+        //////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////
+        var topiclistPromise = new Promise(function (resolve, reject) {
+            // make request(s)
+            // callbacks do data cache and check if all data is back
+            // once data is all back, resolve
+            // if neither return, send empty data through reject?
+            var data = { quotes: null, verses: null };
+            if (dataIsReady(data)) {
+                resolve(data);
+            }
+            [quote, verse].forEach(function (uri) {
+                self.http.get(uri).toPromise()
+                    .then(function (response) { return response.json(); })
+                    .then(function (json) {
+                    data[uri] = json;
+                    handlePromise(data, resolve, reject);
+                    return json;
+                })
+                    .catch(function (error) {
+                    data[uri] = [];
+                    handlePromise(data, resolve, reject);
+                    console.warn("Caught error while requesting " + uri);
+                });
+            });
+        });
+        return topiclistPromise;
+        // return this.http.get(verse).toPromise()
+        //     .then(response => response.json())
+        // ;
     };
     TopicService = __decorate([
         core_1.Injectable(), 
@@ -76,5 +116,20 @@ function processApiData(topics) {
 }
 function inArray(haystack, needle) {
     return haystack.indexOf(needle) > -1;
+}
+function noResultsReturned(data) {
+    return (data.quotes === [] && data.verses === []);
+}
+function dataIsReady(data) {
+    return data.quotes !== [] && data.verses !== [] &&
+        data.quotes !== null && data.verses !== null;
+}
+function handlePromise(data, resolve, reject) {
+    if (dataIsReady(data)) {
+        resolve(data);
+    }
+    else if (noResultsReturned(data)) {
+        reject(data);
+    } // else, do nothing else
 }
 //# sourceMappingURL=topic.service.js.map
