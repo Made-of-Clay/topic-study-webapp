@@ -43,22 +43,13 @@ export class TopicService {
 
     getTopicList(slug: string) {
 console.log('get topic list (service): slug passed was "%s"', slug);
-        let quote = this.topicUrl + '/quotes?filter[tag]=' + slug;
-        let verse = this.topicUrl + '/verses?filter[tag]=' + slug;
+        let quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
+        let verses = this.topicUrl + '/verses?filter[tag]=' + slug;
         let self = this;
         // return Observable.forkJoin(
         //     this.http.get(quote + slug).map((res: Response) => res.json()),
         //     this.http.get(verse + slug).map((res: Response) => res.json())
         // );
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-        // ::: HERE ADAM - resolve and reject are nothing right now
-        //     figure out what should be inside and pass to Promise;
-        //     currently. topiclistPromise is a function that needs
-        //     run with two params (resolve and reject); maybe I need
-        //     to reorder logic *inside* the Promise
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
         let topiclistPromise = new Promise((resolve, reject) => {
             // make request(s)
             // callbacks do data cache and check if all data is back
@@ -68,26 +59,32 @@ console.log('get topic list (service): slug passed was "%s"', slug);
             if (dataIsReady(data)) {
                 resolve(data);
             }
-            [quote, verse].forEach(uri => {
-                self.http.get(uri).toPromise()
-                    .then(response => response.json())
-                    .then(json => {
-                        data[uri] = json;
-                        handlePromise(data, resolve, reject);
-                        return json;
-                    })
-                    .catch(error => {
-                        data[uri] = [];
-                        handlePromise(data, resolve, reject);
-                        console.warn(`Caught error while requesting ${uri}`);
-                    })
-                ;
-            });
+            let map = {"quotes":quotes, "verses":verses};
+            for (var key in map) {
+                self._sendTopicListRequest(data, key, map[key], resolve, reject);
+            }
         });
         return topiclistPromise;
         // return this.http.get(verse).toPromise()
         //     .then(response => response.json())
         // ;
+    }
+    private _sendTopicListRequest(data, key, uri, resolve, reject) {
+        this.http.get(uri).toPromise()
+            .then(response => response.json())
+            .then(json => {
+                console.log('%cinside then', 'font-weight:bold', 'key', key);
+                data[key] = json;
+                handlePromise(data, resolve, reject);
+                return json;
+            })
+            .catch(error => {
+                console.log('%cinside catch', 'font-weight:bold', 'key', key);
+                data[key] = [];
+                handlePromise(data, resolve, reject);
+                console.warn(`Caught error while requesting ${key}`);
+            })
+        ;
     }
 }
 function processApiData(topics: Topic[]) {
@@ -116,9 +113,12 @@ function dataIsReady(data): boolean {
            data.quotes !== null && data.verses !== null;
 }
 function handlePromise(data, resolve, reject) {
+    console.log('data', data);
     if (dataIsReady(data)) {
+        console.log('resolve it!');
         resolve(data);
     } else if (noResultsReturned(data)) {
+        console.log('reject it!');
         reject(data);
     } // else, do nothing else
 }

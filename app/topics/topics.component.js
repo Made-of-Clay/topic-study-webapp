@@ -31,10 +31,10 @@ var TopicsComponent = (function () {
     TopicsComponent.prototype.getTopicList = function (slug) {
         this.topicService.getTopicList(slug)
             .then(function (data) {
-            console.log('data', data);
+            console.log('!! data', data);
         })
             .catch(function (error) {
-            console.log('error', error);
+            console.log('!! error', error);
         });
     };
     TopicsComponent.prototype.filterTopic = function (searched, slug, name) {

@@ -47,22 +47,13 @@ var TopicService = (function () {
     };
     TopicService.prototype.getTopicList = function (slug) {
         console.log('get topic list (service): slug passed was "%s"', slug);
-        var quote = this.topicUrl + '/quotes?filter[tag]=' + slug;
-        var verse = this.topicUrl + '/verses?filter[tag]=' + slug;
+        var quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
+        var verses = this.topicUrl + '/verses?filter[tag]=' + slug;
         var self = this;
         // return Observable.forkJoin(
         //     this.http.get(quote + slug).map((res: Response) => res.json()),
         //     this.http.get(verse + slug).map((res: Response) => res.json())
         // );
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-        // ::: HERE ADAM - resolve and reject are nothing right now
-        //     figure out what should be inside and pass to Promise;
-        //     currently. topiclistPromise is a function that needs
-        //     run with two params (resolve and reject); maybe I need
-        //     to reorder logic *inside* the Promise
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
         var topiclistPromise = new Promise(function (resolve, reject) {
             // make request(s)
             // callbacks do data cache and check if all data is back
@@ -72,25 +63,31 @@ var TopicService = (function () {
             if (dataIsReady(data)) {
                 resolve(data);
             }
-            [quote, verse].forEach(function (uri) {
-                self.http.get(uri).toPromise()
-                    .then(function (response) { return response.json(); })
-                    .then(function (json) {
-                    data[uri] = json;
-                    handlePromise(data, resolve, reject);
-                    return json;
-                })
-                    .catch(function (error) {
-                    data[uri] = [];
-                    handlePromise(data, resolve, reject);
-                    console.warn("Caught error while requesting " + uri);
-                });
-            });
+            var map = { "quotes": quotes, "verses": verses };
+            for (var key in map) {
+                self._sendTopicListRequest(data, key, map[key], resolve, reject);
+            }
         });
         return topiclistPromise;
         // return this.http.get(verse).toPromise()
         //     .then(response => response.json())
         // ;
+    };
+    TopicService.prototype._sendTopicListRequest = function (data, key, uri, resolve, reject) {
+        this.http.get(uri).toPromise()
+            .then(function (response) { return response.json(); })
+            .then(function (json) {
+            console.log('%cinside then', 'font-weight:bold', 'key', key);
+            data[key] = json;
+            handlePromise(data, resolve, reject);
+            return json;
+        })
+            .catch(function (error) {
+            console.log('%cinside catch', 'font-weight:bold', 'key', key);
+            data[key] = [];
+            handlePromise(data, resolve, reject);
+            console.warn("Caught error while requesting " + key);
+        });
     };
     TopicService = __decorate([
         core_1.Injectable(), 
@@ -125,10 +122,13 @@ function dataIsReady(data) {
         data.quotes !== null && data.verses !== null;
 }
 function handlePromise(data, resolve, reject) {
+    console.log('data', data);
     if (dataIsReady(data)) {
+        console.log('resolve it!');
         resolve(data);
     }
     else if (noResultsReturned(data)) {
+        console.log('reject it!');
         reject(data);
     } // else, do nothing else
 }
