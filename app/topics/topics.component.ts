@@ -2,7 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { TopicsService } from './topics.service';
-import { TopicListComponent } from './topic-list.component';
+import { TopicListComponent } from '../topic-list/topic-list.component';
 
 @Component({
     selector: 'moc-topics',
