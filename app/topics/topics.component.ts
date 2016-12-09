@@ -1,14 +1,14 @@
 /// <reference path="topic.d.ts" />
 
 import { Component, OnInit } from '@angular/core';
-import { TopicService } from './topic.service';
+import { TopicsService } from './topics.service';
 import { TopicListComponent } from './topic-list.component';
 
 @Component({
     selector: 'moc-topics',
     // template: `topiclist should show here`,
     // template: `<moc-topiclist></moc-topiclist>`,
-    providers: [ TopicService ],
+    providers: [ TopicsService ],
     templateUrl: 'app/topics/topics.component.html'
 })
 
@@ -16,7 +16,7 @@ export class TopicsComponent implements OnInit {
     topics: Topic[];
     searchTerm: string;
 
-    constructor(private topicService: TopicService) {}
+    constructor(private topicService: TopicsService) {}
 
     ngOnInit(): void {
         this.getTopics();

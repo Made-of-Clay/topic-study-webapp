@@ -14,7 +14,7 @@ var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
 var topics_component_1 = require('./topics/topics.component');
-var topic_service_1 = require('./topics/topic.service');
+var topics_service_1 = require('./topics/topics.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -30,7 +30,7 @@ var AppModule = (function () {
                 topics_component_1.TopicsComponent
             ],
             providers: [
-                topic_service_1.TopicService
+                topics_service_1.TopicsService
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

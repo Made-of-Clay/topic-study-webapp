@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TopicsComponent } from './topics/topics.component';
 import { TopicListComponent } from './topics/topic-list.component';
-import { TopicService } from './topics/topic.service';
+import { TopicsService } from './topics/topics.service';
 
 @NgModule({
     imports: [
@@ -19,7 +19,7 @@ import { TopicService } from './topics/topic.service';
         TopicsComponent
     ],
     providers: [
-        TopicService
+        TopicsService
     ],
     bootstrap: [ AppComponent ]
 })

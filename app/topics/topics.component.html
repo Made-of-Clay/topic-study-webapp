@@ -2,7 +2,6 @@
 <div class="topic-search-filter">
     <input [(ngModel)]="searchTerm" type="text" placeholder="Filter Topics"><br>
     {{searchTerm}}
-    <hr>
 </div>
 
 <div *ngFor="let topic of topics">
@@ -12,5 +11,4 @@
         (click)="getTopicList(topic.slug)">
         {{topic.name}} ({{topic.count}})
     </div>
-    <!-- <moc-topic-list>Loading List...</moc-topic-list> -->
 </div>

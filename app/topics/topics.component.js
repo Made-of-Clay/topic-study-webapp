@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var topic_service_1 = require('./topic.service');
+var topics_service_1 = require('./topics.service');
 var TopicsComponent = (function () {
     function TopicsComponent(topicService) {
         this.topicService = topicService;
@@ -51,10 +51,10 @@ var TopicsComponent = (function () {
             selector: 'moc-topics',
             // template: `topiclist should show here`,
             // template: `<moc-topiclist></moc-topiclist>`,
-            providers: [topic_service_1.TopicService],
+            providers: [topics_service_1.TopicsService],
             templateUrl: 'app/topics/topics.component.html'
         }), 
-        __metadata('design:paramtypes', [topic_service_1.TopicService])
+        __metadata('design:paramtypes', [topics_service_1.TopicsService])
     ], TopicsComponent);
     return TopicsComponent;
 }());
