@@ -1,13 +1,18 @@
 /// <reference path="topic.d.ts" />
 
+/*
+    - getTopicList() returns data from service
+    - this component should emit the data
+    - topic-list.component will then receive it
+    - display topic-list data from there...
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { TopicsService } from './topics.service';
 import { TopicListComponent } from '../topic-list/topic-list.component';
 
 @Component({
     selector: 'moc-topics',
-    // template: `topiclist should show here`,
-    // template: `<moc-topiclist></moc-topiclist>`,
     providers: [ TopicsService ],
     templateUrl: 'app/topics/topics.component.html'
 })
@@ -26,11 +31,8 @@ export class TopicsComponent implements OnInit {
         if (this.topics === undefined) {
             this.topicService.getTopics().then(topics => this.topics = topics);
         }
-        // this.topics = this.topicService.getTopics();
     }
-    // get all topics from TopicService
-    // pass list of topics (tags) into view
-    // loop list of topics creating multiple topiclists
+
     getTopicList(slug: string) {
         this.topicService.getTopicList(slug)
             .then(data => {
