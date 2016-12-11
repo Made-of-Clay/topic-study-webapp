@@ -25,9 +25,10 @@ var TopicListComponent = (function () {
             providers: [topic_service_1.TopicService],
             templateUrl: 'app/topics/topic-list.component.html'
         }), 
-        __metadata('design:paramtypes', [topic_service_1.TopicService])
+        __metadata('design:paramtypes', [(typeof (_a = typeof topic_service_1.TopicService !== 'undefined' && topic_service_1.TopicService) === 'function' && _a) || Object])
     ], TopicListComponent);
     return TopicListComponent;
+    var _a;
 }());
 exports.TopicListComponent = TopicListComponent;
 //# sourceMappingURL=topic-list.component.js.map

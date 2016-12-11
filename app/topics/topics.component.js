@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var topic_service_1 = require('./topic.service');
+var topics_service_1 = require('./topics.service');
 var TopicsComponent = (function () {
     function TopicsComponent(topicService) {
         this.topicService = topicService;
@@ -29,20 +29,32 @@ var TopicsComponent = (function () {
     // pass list of topics (tags) into view
     // loop list of topics creating multiple topiclists
     TopicsComponent.prototype.getTopicList = function (slug) {
-        console.log('get topic list');
-        this.topicService.getTopicList(slug) /*.subscribe(data => {
-            console.log('data', data);
-        })*/;
+        this.topicService.getTopicList(slug)
+            .then(function (data) {
+            console.log('!! data', data);
+        })
+            .catch(function (error) {
+            console.log('!! error', error);
+        });
+    };
+    TopicsComponent.prototype.filterTopic = function (searched, slug, name) {
+        if (searched === void 0) { searched = ''; }
+        if (searched) {
+            return !!(slug.match(searched) || slug.match(name));
+        }
+        else {
+            return true;
+        }
     };
     TopicsComponent = __decorate([
         core_1.Component({
             selector: 'moc-topics',
             // template: `topiclist should show here`,
             // template: `<moc-topiclist></moc-topiclist>`,
-            providers: [topic_service_1.TopicService],
+            providers: [topics_service_1.TopicsService],
             templateUrl: 'app/topics/topics.component.html'
         }), 
-        __metadata('design:paramtypes', [topic_service_1.TopicService])
+        __metadata('design:paramtypes', [topics_service_1.TopicsService])
     ], TopicsComponent);
     return TopicsComponent;
 }());

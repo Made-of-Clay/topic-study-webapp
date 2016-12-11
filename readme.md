@@ -25,13 +25,56 @@ Tags are the topics that will be studied. I've chosen to organize the data this 
 #### Verses/Quotes (VQs)
 - John 3:16
 
+#### Component Tree
+    topic-study-app
+        h1
+        
+        (home)
+        input:search
+        topic-card
+
+        (topic)
+        h2
+        div.topic-filters
+        topic-post
+
+        (topic-post)
+        <topic stuff>
+        modal-detail
+            span.icon-close
+            p.post-content
+            span.post-attrib
+
 #### Verse/Quote (VQ)
 - "For God so loved the world that He gave..."
 
+### Page Descriptions
+#### Home -- /
+- h1 saying "Topic Study"
+- prominent search input to filter showing topics
+- list of topics (w/ count of things within topic)
+- clicking on a topic navigates
+
+#### Topic -- /topic/:topic-slug (/topic/holy-spirit)
+- h1 saying "Topic Study"
+- back (arrow) button
+- h2 saying topic name
+- radios acting as filters (All, Verses, Quotes)
+- list of verses/quotes w/ post title displaying
+- clicking on verse/quote expands detail box (modal dialog)
+
+#### Topic Post Detail -- /topic/:topic-slug/:post-slug (/topic/holy-spirit/john-3-16-17)
+- modal dialog overlaying Topic page
+- content of post
+- beneath that, verse/quote author showing in quote-like format
+
+### Misc Notes
+- Footer section will have Topics(/Home), About links
+
 ### General Steps
 1. Show list of topics
-2. Click topic for list (data fetch or cached)
+2. Click topic for list & nav to /topic/:topic-slug
 3. Show (fetched) list of verses/quotes
-4. Click verse (data fetch or cached)
-5. Navigate to verse detail (ref, txt)
-6. Offer back btn/link (eventually other vq in topic)
+4. Click verse
+5. Modal dialog shows with post's content and title
+6. Offer back btn/link (eventually other post in topic)

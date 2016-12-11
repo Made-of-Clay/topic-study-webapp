@@ -1,21 +1,27 @@
 /// <reference path="topic.d.ts" />
 
+/*
+    - getTopicList() returns data from service
+    - this component should emit the data
+    - topic-list.component will then receive it
+    - display topic-list data from there...
+ */
+
 import { Component, OnInit } from '@angular/core';
-import { TopicService } from './topic.service';
-import { TopicListComponent } from './topic-list.component';
+import { TopicsService } from './topics.service';
+import { TopicListComponent } from '../topic-list/topic-list.component';
 
 @Component({
     selector: 'moc-topics',
-    // template: `topiclist should show here`,
-    // template: `<moc-topiclist></moc-topiclist>`,
-    providers: [ TopicService ],
+    providers: [ TopicsService ],
     templateUrl: 'app/topics/topics.component.html'
 })
 
 export class TopicsComponent implements OnInit {
     topics: Topic[];
+    searchTerm: string;
 
-    constructor(private topicService: TopicService) {}
+    constructor(private topicService: TopicsService) {}
 
     ngOnInit(): void {
         this.getTopics();
@@ -25,15 +31,24 @@ export class TopicsComponent implements OnInit {
         if (this.topics === undefined) {
             this.topicService.getTopics().then(topics => this.topics = topics);
         }
-        // this.topics = this.topicService.getTopics();
     }
-    // get all topics from TopicService
-    // pass list of topics (tags) into view
-    // loop list of topics creating multiple topiclists
+
     getTopicList(slug: string) {
-        console.log('get topic list');
-        this.topicService.getTopicList(slug)/*.subscribe(data => {
-            console.log('data', data);
-        })*/;
+        this.topicService.getTopicList(slug)
+            .then(data => {
+                console.log('!! data', data);
+            })
+            .catch(error => {
+                console.log('!! error', error);
+            })
+        ;
+    }
+
+    filterTopic(searched: string = '', slug: string, name: string): boolean {
+        if (searched) {
+            return !!(slug.match(searched) || slug.match(name));
+        } else {
+            return true;
+        }
     }
 }
