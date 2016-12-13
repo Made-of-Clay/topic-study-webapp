@@ -78,3 +78,19 @@ Tags are the topics that will be studied. I've chosen to organize the data this 
 4. Click verse
 5. Modal dialog shows with post's content and title
 6. Offer back btn/link (eventually other post in topic)
+
+## Alternative Project Structure
+/dist
+    /
+/app
+    /styles
+        /bourbon
+        styles.scss
+    ...
+    /topics
+        ...
+        topics.component.ts
+        topics.component.ts
+        topics.scss
+        ...
+...
