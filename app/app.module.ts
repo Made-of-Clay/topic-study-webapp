@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TopicsComponent } from './topics/topics.component';
-import { TopicListComponent } from './topics/topic-list.component';
+import { TopicPostComponent } from './topic-post/topic-post.component';
 import { TopicsService } from './topics/topics.service';
 
 @NgModule({
@@ -16,7 +16,8 @@ import { TopicsService } from './topics/topics.service';
     ],
     declarations: [
         AppComponent,
-        TopicsComponent
+        TopicsComponent,
+        TopicPostComponent
     ],
     providers: [
         TopicsService

@@ -9,26 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var topic_service_1 = require('./topic.service');
-var TopicListComponent = (function () {
-    function TopicListComponent(topicService) {
+var topics_service_1 = require('../topics/topics.service');
+var TopicPostComponent = (function () {
+    function TopicPostComponent(topicService) {
         this.topicService = topicService;
     }
-    TopicListComponent.prototype.ngOnInit = function () {
+    TopicPostComponent.prototype.ngOnInit = function () {
         // this.get
         // GET both verses and quotes using service in ex. page
         // http://www.metaltoad.com/blog/angular-2-http-observables
     };
-    TopicListComponent = __decorate([
+    TopicPostComponent = __decorate([
         core_1.Component({
-            selector: 'moc-topic-list',
-            providers: [topic_service_1.TopicService],
-            templateUrl: 'app/topics/topic-list.component.html'
+            selector: 'moc-topic-post',
+            providers: [topics_service_1.TopicsService],
+            templateUrl: 'app/topic-post/topic-post.component.html'
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof topic_service_1.TopicService !== 'undefined' && topic_service_1.TopicService) === 'function' && _a) || Object])
-    ], TopicListComponent);
-    return TopicListComponent;
-    var _a;
+        __metadata('design:paramtypes', [topics_service_1.TopicsService])
+    ], TopicPostComponent);
+    return TopicPostComponent;
 }());
-exports.TopicListComponent = TopicListComponent;
-//# sourceMappingURL=topic-list.component.js.map
+exports.TopicPostComponent = TopicPostComponent;
+//# sourceMappingURL=topic-post.component.js.map

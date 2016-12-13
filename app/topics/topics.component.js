@@ -9,6 +9,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/*
+    - getTopicList() returns data from service
+    - this component should emit the data
+    - topic-list.component will then receive it
+    - display topic-list data from there...
+ */
 var core_1 = require('@angular/core');
 var topics_service_1 = require('./topics.service');
 var TopicsComponent = (function () {
@@ -23,11 +29,7 @@ var TopicsComponent = (function () {
         if (this.topics === undefined) {
             this.topicService.getTopics().then(function (topics) { return _this.topics = topics; });
         }
-        // this.topics = this.topicService.getTopics();
     };
-    // get all topics from TopicService
-    // pass list of topics (tags) into view
-    // loop list of topics creating multiple topiclists
     TopicsComponent.prototype.getTopicList = function (slug) {
         this.topicService.getTopicList(slug)
             .then(function (data) {
@@ -49,8 +51,6 @@ var TopicsComponent = (function () {
     TopicsComponent = __decorate([
         core_1.Component({
             selector: 'moc-topics',
-            // template: `topiclist should show here`,
-            // template: `<moc-topiclist></moc-topiclist>`,
             providers: [topics_service_1.TopicsService],
             templateUrl: 'app/topics/topics.component.html'
         }), 

@@ -4,6 +4,10 @@
     {{searchTerm}}
 </div>
 
+<p class="default-content" *ngIf="!topics">
+    Fetching topics...
+</p>
+
 <div *ngFor="let topic of topics">
     <!-- *ngIf="searchTerm"  (will this hide unless search matches? How do I show all but hide when searchTerm is truthy?) -->
     <div class="topic-name topic-{{topic.slug}}"
@@ -11,4 +15,5 @@
         (click)="getTopicList(topic.slug)">
         {{topic.name}} ({{topic.count}})
     </div>
+
 </div>

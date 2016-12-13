@@ -14,6 +14,7 @@ var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
 var topics_component_1 = require('./topics/topics.component');
+var topic_post_component_1 = require('./topic-post/topic-post.component');
 var topics_service_1 = require('./topics/topics.service');
 var AppModule = (function () {
     function AppModule() {
@@ -27,7 +28,8 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
-                topics_component_1.TopicsComponent
+                topics_component_1.TopicsComponent,
+                topic_post_component_1.TopicPostComponent
             ],
             providers: [
                 topics_service_1.TopicsService
