@@ -1,0 +1,17 @@
+$bp-limit-default: min !default; // default set to min because mobile-first RWD is the shizzle
+
+@mixin breakpoint($amt, $limit: $bp-limit-default) {
+    @media screen and (#{$limit}-width: $amt) {
+        @content;
+    }
+}
+
+// --- breakpoint() alias
+@mixin bp($amt, $limit: $bp-limit-default) {
+    // bp() is an alias for breakpoint()
+    // the @params are just passed along for
+    // breakpoint() to use
+    @include breakpoint($amt, $limit) {
+        @content;
+    }
+}
