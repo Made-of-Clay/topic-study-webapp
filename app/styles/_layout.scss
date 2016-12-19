@@ -1,0 +1,21 @@
+$sidebar-width: 20em;
+$sidebar-margin: 1em;
+
+topic-study-app {
+    @include clearfix;
+}
+
+.l-sidebar {
+    box-sizing: border-box;
+    float: left;
+    margin-right: $sidebar-margin;
+    outline: 1px solid;
+    padding: 1em;
+    width: $sidebar-width;
+}
+
+.l-content {
+    box-sizing: border-box;
+    float: left;
+    width: calc(100% - #{$sidebar-width + $sidebar-margin + 1});
+}
