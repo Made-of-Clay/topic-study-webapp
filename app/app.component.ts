@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-    
+    topicData = [];
+
+    passTopicData(data): void {
+        this.topicData = data;
+    }
 }

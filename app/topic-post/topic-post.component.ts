@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TopicsService } from '../topics/topics.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { TopicsService } from '../topics/topics.service';
 })
 
 export class TopicPostComponent implements OnInit {
+    @Input() data;
+
     constructor(private topicService: TopicsService) {}
 
     ngOnInit(): void {

@@ -19,6 +19,10 @@ var TopicPostComponent = (function () {
         // GET both verses and quotes using service in ex. page
         // http://www.metaltoad.com/blog/angular-2-http-observables
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], TopicPostComponent.prototype, "data", void 0);
     TopicPostComponent = __decorate([
         core_1.Component({
             selector: 'moc-topic-post',

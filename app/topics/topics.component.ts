@@ -7,7 +7,7 @@
     - display topic-list data from there...
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TopicsService } from './topics.service';
 import { TopicPostComponent } from '../topic-post/topic-post.component';
 
@@ -18,6 +18,8 @@ import { TopicPostComponent } from '../topic-post/topic-post.component';
 })
 
 export class TopicsComponent implements OnInit {
+    @Output() topicLoaded = new EventEmitter();
+
     topics: Topic[];
     searchTerm: string;
 
@@ -36,6 +38,7 @@ export class TopicsComponent implements OnInit {
     getTopicList(slug: string) {
         this.topicService.getTopicList(slug)
             .then(data => {
+                this.topicLoaded.emit(data);
                 console.log('!! data', data);
             })
             .catch(error => {

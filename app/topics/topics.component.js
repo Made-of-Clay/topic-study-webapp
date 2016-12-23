@@ -20,6 +20,7 @@ var topics_service_1 = require('./topics.service');
 var TopicsComponent = (function () {
     function TopicsComponent(topicService) {
         this.topicService = topicService;
+        this.topicLoaded = new core_1.EventEmitter();
     }
     TopicsComponent.prototype.ngOnInit = function () {
         this.getTopics();
@@ -31,8 +32,10 @@ var TopicsComponent = (function () {
         }
     };
     TopicsComponent.prototype.getTopicList = function (slug) {
+        var _this = this;
         this.topicService.getTopicList(slug)
             .then(function (data) {
+            _this.topicLoaded.emit(data);
             console.log('!! data', data);
         })
             .catch(function (error) {
@@ -48,6 +51,10 @@ var TopicsComponent = (function () {
             return true;
         }
     };
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], TopicsComponent.prototype, "topicLoaded", void 0);
     TopicsComponent = __decorate([
         core_1.Component({
             selector: 'moc-topics',

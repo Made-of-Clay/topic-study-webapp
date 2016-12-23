@@ -4,11 +4,11 @@
 </header>
 
 <aside id="main-sidebar" class="l-sidebar">
-    <moc-topics>Fetching Topics...</moc-topics>
+    <moc-topics (topicLoaded)="passTopicData($event)">Fetching Topics...</moc-topics>
 </aside>
 
 <div id="main-content" class="l-content">
     <div class="topic-posts">
-        <moc-topic-post></moc-topic-post>
+        <moc-topic-post [data]="topicData"></moc-topic-post>
     </div>
 </div>

@@ -59,9 +59,9 @@ var TopicsService = (function () {
             if (dataIsReady(data)) {
                 resolve(data);
             }
-            var map = { "quotes": quotes, "verses": verses };
-            for (var key in map) {
-                self._sendTopicListRequest(data, key, map[key], resolve, reject);
+            var urlMap = { "quotes": quotes, "verses": verses };
+            for (var key in urlMap) {
+                self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
             }
         });
         return topiclistPromise;

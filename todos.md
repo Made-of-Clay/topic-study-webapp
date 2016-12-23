@@ -1,8 +1,9 @@
 # Topic Study Todos
 
-1. Styles 1-3
-2. Functionality 1-2
-3. Styles 4
+PRIMARY: refactor data from REST to just be array of objects (instead of array with quotes and verses props)
+
+1. Functionality 1-2
+2. Styles 4
 
 ## Styles
 

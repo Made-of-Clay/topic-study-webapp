@@ -55,9 +55,9 @@ console.log('get topic list (service): slug passed was "%s"', slug);
             if (dataIsReady(data)) {
                 resolve(data);
             }
-            let map = {"quotes":quotes, "verses":verses};
-            for (var key in map) {
-                self._sendTopicListRequest(data, key, map[key], resolve, reject);
+            let urlMap = {"quotes":quotes, "verses":verses};
+            for (var key in urlMap) {
+                self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
             }
         });
         return topiclistPromise;
