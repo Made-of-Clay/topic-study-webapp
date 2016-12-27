@@ -46,6 +46,24 @@ var TopicsService = (function () {
         return Promise.reject(error.message || error);
     };
     TopicsService.prototype.getTopicList = function (slug) {
+        var _this = this;
+        var types = ['quotes', 'verses'];
+        var reqs = types.map(function (type) {
+            var uri = _this.topicUrl + "/" + type + "?filter[tag]=" + slug;
+            return _this._getRequest(uri);
+        });
+        return Promise.all(reqs)
+            .then(function (results) {
+            var dataset = [];
+            results.map(function (result) {
+                var data = result.json();
+                dataset.push(data);
+            });
+            return results;
+        })
+            .catch(function (error) { return console.error('-- ' + error); });
+    };
+    TopicsService.prototype.getTopicList1 = function (slug) {
         console.log('get topic list (service): slug passed was "%s"', slug);
         var quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
         var verses = this.topicUrl + '/verses?filter[tag]=' + slug;
@@ -81,6 +99,9 @@ var TopicsService = (function () {
             handlePromise(data, resolve, reject);
             console.warn("Caught error while requesting \"" + key + "\"");
         });
+    };
+    TopicsService.prototype._getRequest = function (uri) {
+        return this.http.get(uri).toPromise();
     };
     TopicsService = __decorate([
         core_1.Injectable(), 

@@ -42,6 +42,27 @@ export class TopicsService {
     }
 
     getTopicList(slug: string): Promise<any> {
+        var types = ['quotes', 'verses'];
+
+        var reqs = types.map(type => {
+            let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
+            return this._getRequest(uri);
+        });
+
+        return Promise.all(reqs)
+            .then(results => {
+                let dataset = [];
+                results.map(result => {
+                    let data = result.json();
+                    dataset.push(data);
+                });
+                return results;
+            })
+            .catch(error => console.error('-- '+error))
+        ;
+    }
+
+    getTopicList1(slug: string): Promise<any> {
 console.log('get topic list (service): slug passed was "%s"', slug);
         let quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
         let verses = this.topicUrl + '/verses?filter[tag]=' + slug;
@@ -78,6 +99,9 @@ console.log('get topic list (service): slug passed was "%s"', slug);
                 console.warn(`Caught error while requesting "${key}"`);
             })
         ;
+    }
+    private _getRequest(uri: string) {
+        return this.http.get(uri).toPromise();
     }
 }
 function processApiData(topics: Topic[]) {

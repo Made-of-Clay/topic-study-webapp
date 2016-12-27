@@ -38,8 +38,8 @@ export class TopicsComponent implements OnInit {
     getTopicList(slug: string) {
         this.topicService.getTopicList(slug)
             .then(data => {
-                this.topicLoaded.emit(data);
                 console.log('!! data', data);
+                // this.topicLoaded.emit(data);
             })
             .catch(error => {
                 console.log('!! error', error);
