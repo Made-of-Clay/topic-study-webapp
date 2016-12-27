@@ -1,6 +1,8 @@
 # Topic Study Todos
 
-PRIMARY: refactor data from REST to just be array of objects (instead of array with quotes and verses props)
+PRIMARY: refactor data from REST to just be array of objects (instead of array with quotes and verses props).
+Tried using `Promise.all()`, but the result was the same as `Observable.forkJoin()`. The solution must be a custom
+shim (maybe `{option.soft}` as a 2nd param) to handle x requests & return an array with `null` for failed requests.
 
 1. Functionality 1-2
 2. Styles 4
