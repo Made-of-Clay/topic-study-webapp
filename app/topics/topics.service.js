@@ -45,7 +45,7 @@ var TopicsService = (function () {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
-    TopicsService.prototype.getTopicList = function (slug) {
+    TopicsService.prototype.getTopicList2 = function (slug) {
         var _this = this;
         var types = ['quotes', 'verses'];
         var reqs = types.map(function (type) {
@@ -56,28 +56,30 @@ var TopicsService = (function () {
             .then(function (results) {
             var dataset = [];
             results.map(function (result) {
-                var data = result.json();
-                dataset.push(data);
+                // let data = result.json();
+                // dataset.push(data);
             });
             return results;
         })
             .catch(function (error) { return console.error('-- ' + error); });
     };
-    TopicsService.prototype.getTopicList1 = function (slug) {
+    TopicsService.prototype.getTopicList = function (slug) {
         console.log('get topic list (service): slug passed was "%s"', slug);
         var quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
         var verses = this.topicUrl + '/verses?filter[tag]=' + slug;
+        var urlMap = { "quotes": quotes, "verses": verses };
         var self = this;
-        // return Observable.forkJoin(
-        //     this.http.get(quote + slug).map((res: Response) => res.json()),
-        //     this.http.get(verse + slug).map((res: Response) => res.json())
-        // );
+        self.topicListPostTypes = ['verses', 'quotes'];
+        self.topicListReceived = [];
+        for (var postType in self.topicListPostTypes) {
+            ;
+        }
         var topiclistPromise = new Promise(function (resolve, reject) {
-            var data = { quotes: null, verses: null };
+            // let data = { quotes:null, verses:null };
+            var data = [];
             if (dataIsReady(data)) {
                 resolve(data);
             }
-            var urlMap = { "quotes": quotes, "verses": verses };
             for (var key in urlMap) {
                 self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
             }
@@ -85,20 +87,30 @@ var TopicsService = (function () {
         return topiclistPromise;
     };
     TopicsService.prototype._sendTopicListRequest = function (data, key, uri, resolve, reject) {
+        var self = this;
         this.http.get(uri).toPromise()
             .then(function (response) { return response.json(); })
             .then(function (json) {
             console.log('%cinside then', 'font-weight:bold', 'key', key);
-            data[key] = json;
+            self.topicListReceived.push(json[0].type);
+            data.push(json);
             handlePromise(data, resolve, reject);
             return json;
         })
             .catch(function (error) {
             console.log('%cinside catch', 'font-weight:bold', 'key', key);
-            data[key] = [];
+            data.push([]);
             handlePromise(data, resolve, reject);
             console.warn("Caught error while requesting \"" + key + "\"");
         });
+    };
+    TopicsService.prototype._confirmDataReadiness = function () {
+        for (var key in this.topicListPostTypes) {
+            if (!inArray(this.topicListReceived, key)) {
+                return false;
+            }
+        }
+        return true;
     };
     TopicsService.prototype._getRequest = function (uri) {
         return this.http.get(uri).toPromise();

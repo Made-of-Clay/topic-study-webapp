@@ -19,6 +19,8 @@ const TOPICS = [{
 export class TopicsService {
     private topicUrl: string = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
     private _rawData;
+    private topicListReceived: string[];
+    private topicListPostTypes: string[];
 
     get rawData() {
         return this._rawData;
@@ -41,7 +43,7 @@ export class TopicsService {
         return Promise.reject(error.message || error);
     }
 
-    getTopicList(slug: string): Promise<any> {
+    getTopicList2(slug: string): Promise<any> {
         var types = ['quotes', 'verses'];
 
         var reqs = types.map(type => {
@@ -53,8 +55,8 @@ export class TopicsService {
             .then(results => {
                 let dataset = [];
                 results.map(result => {
-                    let data = result.json();
-                    dataset.push(data);
+                    // let data = result.json();
+                    // dataset.push(data);
                 });
                 return results;
             })
@@ -62,21 +64,26 @@ export class TopicsService {
         ;
     }
 
-    getTopicList1(slug: string): Promise<any> {
+    getTopicList(slug: string): Promise<any> {
 console.log('get topic list (service): slug passed was "%s"', slug);
         let quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
         let verses = this.topicUrl + '/verses?filter[tag]=' + slug;
+        let urlMap = {"quotes":quotes, "verses":verses};
         let self = this;
-        // return Observable.forkJoin(
-        //     this.http.get(quote + slug).map((res: Response) => res.json()),
-        //     this.http.get(verse + slug).map((res: Response) => res.json())
-        // );
+
+        self.topicListPostTypes = [ 'verses', 'quotes' ];
+        self.topicListReceived = [];
+
+        for (let postType in self.topicListPostTypes) {
+            ;
+        }
+
         let topiclistPromise = new Promise((resolve, reject) => {
-            let data = { quotes:null, verses:null };
+            // let data = { quotes:null, verses:null };
+            let data = [];
             if (dataIsReady(data)) {
                 resolve(data);
             }
-            let urlMap = {"quotes":quotes, "verses":verses};
             for (var key in urlMap) {
                 self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
             }
@@ -84,22 +91,33 @@ console.log('get topic list (service): slug passed was "%s"', slug);
         return topiclistPromise;
     }
     private _sendTopicListRequest(data, key, uri, resolve, reject) {
+        const self = this;
         this.http.get(uri).toPromise()
             .then(response => response.json())
             .then(json => {
                 console.log('%cinside then', 'font-weight:bold', 'key', key);
-                data[key] = json;
+                self.topicListReceived.push(json[0].type);
+                data.push(json);
                 handlePromise(data, resolve, reject);
                 return json;
             })
             .catch(error => {
                 console.log('%cinside catch', 'font-weight:bold', 'key', key);
-                data[key] = [];
+                data.push([]);
                 handlePromise(data, resolve, reject);
                 console.warn(`Caught error while requesting "${key}"`);
             })
         ;
     }
+    private _confirmDataReadiness() {
+        for (var key in this.topicListPostTypes) {
+            if (!inArray(this.topicListReceived, key)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private _getRequest(uri: string) {
         return this.http.get(uri).toPromise();
     }
