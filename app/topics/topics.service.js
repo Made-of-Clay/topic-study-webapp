@@ -23,6 +23,7 @@ var TopicsService = (function () {
     function TopicsService(http) {
         this.http = http;
         this.topicUrl = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
+        this.topicListPostTypes = ['verses', 'quotes'];
         console.log('topicsService constructed');
     }
     Object.defineProperty(TopicsService.prototype, "rawData", {
@@ -45,71 +46,101 @@ var TopicsService = (function () {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
-    TopicsService.prototype.getTopicList2 = function (slug) {
-        var _this = this;
-        var types = ['quotes', 'verses'];
-        var reqs = types.map(function (type) {
-            var uri = _this.topicUrl + "/" + type + "?filter[tag]=" + slug;
-            return _this._getRequest(uri);
-        });
-        return Promise.all(reqs)
-            .then(function (results) {
-            var dataset = [];
-            results.map(function (result) {
-                // let data = result.json();
-                // dataset.push(data);
-            });
-            return results;
-        })
-            .catch(function (error) { return console.error('-- ' + error); });
-    };
+    // getTopicList2(slug: string): Promise<any> {
+    //     var types = ['quotes', 'verses'];
+    //     var reqs = types.map(type => {
+    //         let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
+    //         return this._getRequest(uri);
+    //     });
+    //     return Promise.all(reqs)
+    //         .then(results => {
+    //             let dataset = [];
+    //             results.map(result => {
+    //                 // let data = result.json();
+    //                 // dataset.push(data);
+    //             });
+    //             return results;
+    //         })
+    //         .catch(error => console.error('-- '+error))
+    //     ;
+    // }
     TopicsService.prototype.getTopicList = function (slug) {
-        console.log('get topic list (service): slug passed was "%s"', slug);
-        var quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
-        var verses = this.topicUrl + '/verses?filter[tag]=' + slug;
-        var urlMap = { "quotes": quotes, "verses": verses };
+        var _this = this;
+        // let quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
+        // let verses = this.topicUrl + '/verses?filter[tag]=' + slug;
+        // let urlMap = {"quotes":quotes, "verses":verses};
         var self = this;
-        self.topicListPostTypes = ['verses', 'quotes'];
         self.topicListReceived = [];
-        for (var postType in self.topicListPostTypes) {
-            ;
-        }
-        var topiclistPromise = new Promise(function (resolve, reject) {
-            // let data = { quotes:null, verses:null };
-            var data = [];
-            if (dataIsReady(data)) {
-                resolve(data);
-            }
-            for (var key in urlMap) {
-                self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
-            }
+        self.topicListData = [];
+        return new Promise(function (resolve, reject) {
+            self.topicListPostTypes.forEach(function (postType) {
+                // for (let postType in self.topicListPostTypes) { // [ 'verses', 'quotes' ]
+                // make request using postType in uri
+                // make common request in method call
+                // method call returns individual promise
+                var uri = _this.topicUrl + "/" + postType + "?filter[tag]=" + slug;
+                self._getTopicListData(uri)
+                    .then(function () {
+                    console.log('last then() before returning');
+                    if (self._confirmDataReadiness()) {
+                        console.log('data is ready', self.topicListData);
+                        resolve(self.topicListData);
+                    }
+                });
+                // }
+            });
         });
-        return topiclistPromise;
+        // let topiclistPromise = new Promise((resolve, reject) => {
+        // // let data = { quotes:null, verses:null };
+        // let data = [];
+        // if (dataIsReady(data)) {
+        //     resolve(data);
+        // }
+        // for (var key in urlMap) {
+        //     self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
+        // }
+        // });
+        // return topiclistPromise;
     };
-    TopicsService.prototype._sendTopicListRequest = function (data, key, uri, resolve, reject) {
+    TopicsService.prototype._getTopicListData = function (uri) {
         var self = this;
-        this.http.get(uri).toPromise()
+        return this.http.get(uri).toPromise()
             .then(function (response) { return response.json(); })
             .then(function (json) {
-            console.log('%cinside then', 'font-weight:bold', 'key', key);
-            self.topicListReceived.push(json[0].type);
-            data.push(json);
-            handlePromise(data, resolve, reject);
+            self.topicListData.push(json[0].type);
             return json;
         })
             .catch(function (error) {
-            console.log('%cinside catch', 'font-weight:bold', 'key', key);
-            data.push([]);
-            handlePromise(data, resolve, reject);
-            console.warn("Caught error while requesting \"" + key + "\"");
+            self.topicListData.push([]);
         });
     };
+    // private _sendTopicListRequest1(data, key, uri, resolve, reject) {
+    // const self = this;
+    // this.http.get(uri).toPromise()
+    //     .then(response => response.json())
+    //     .then(json => {
+    //         console.log('%cinside then', 'font-weight:bold', 'key', key);
+    //         self.topicListReceived.push(json[0].type);
+    //         data.push(json);
+    //         handlePromise(data, resolve, reject);
+    //         return json;
+    //     })
+    //     .catch(error => {
+    //         console.log('%cinside catch', 'font-weight:bold', 'key', key);
+    //         data.push([]);
+    //         handlePromise(data, resolve, reject);
+    //         console.warn(`Caught error while requesting "${key}"`);
+    //     })
+    // ;
+    // }
     TopicsService.prototype._confirmDataReadiness = function () {
-        for (var key in this.topicListPostTypes) {
-            if (!inArray(this.topicListReceived, key)) {
+        var _this = this;
+        this.topicListPostTypes.forEach(function (postType) {
+            if (!inArray(_this.topicListReceived, postType)) {
+                console.log('not ready!');
                 return false;
             }
-        }
+        });
         return true;
     };
     TopicsService.prototype._getRequest = function (uri) {
