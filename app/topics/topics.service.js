@@ -46,102 +46,23 @@ var TopicsService = (function () {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
-    // getTopicList2(slug: string): Promise<any> {
-    //     var types = ['quotes', 'verses'];
-    //     var reqs = types.map(type => {
-    //         let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
-    //         return this._getRequest(uri);
-    //     });
-    //     return Promise.all(reqs)
-    //         .then(results => {
-    //             let dataset = [];
-    //             results.map(result => {
-    //                 // let data = result.json();
-    //                 // dataset.push(data);
-    //             });
-    //             return results;
-    //         })
-    //         .catch(error => console.error('-- '+error))
-    //     ;
-    // }
     TopicsService.prototype.getTopicList = function (slug) {
         var _this = this;
-        // let quotes = this.topicUrl + '/quotes?filter[tag]=' + slug;
-        // let verses = this.topicUrl + '/verses?filter[tag]=' + slug;
-        // let urlMap = {"quotes":quotes, "verses":verses};
-        var self = this;
-        self.topicListReceived = [];
-        self.topicListData = [];
-        return new Promise(function (resolve, reject) {
-            self.topicListPostTypes.forEach(function (postType) {
-                // for (let postType in self.topicListPostTypes) { // [ 'verses', 'quotes' ]
-                // make request using postType in uri
-                // make common request in method call
-                // method call returns individual promise
-                var uri = _this.topicUrl + "/" + postType + "?filter[tag]=" + slug;
-                self._getTopicListData(uri)
-                    .then(function () {
-                    console.log('last then() before returning');
-                    if (self._confirmDataReadiness()) {
-                        console.log('data is ready', self.topicListData);
-                        resolve(self.topicListData);
-                    }
-                });
-                // }
+        var types = ['quotes', 'verses'];
+        var reqs = types.map(function (type) {
+            var uri = _this.topicUrl + "/" + type + "?filter[tag]=" + slug;
+            return _this._getRequest(uri);
+        });
+        return Promise.all(reqs)
+            .then(function (results) {
+            var dataset = [];
+            results.map(function (result) {
+                var data = result.json();
+                dataset.push(data);
             });
-        });
-        // let topiclistPromise = new Promise((resolve, reject) => {
-        // // let data = { quotes:null, verses:null };
-        // let data = [];
-        // if (dataIsReady(data)) {
-        //     resolve(data);
-        // }
-        // for (var key in urlMap) {
-        //     self._sendTopicListRequest(data, key, urlMap[key], resolve, reject);
-        // }
-        // });
-        // return topiclistPromise;
-    };
-    TopicsService.prototype._getTopicListData = function (uri) {
-        var self = this;
-        return this.http.get(uri).toPromise()
-            .then(function (response) { return response.json(); })
-            .then(function (json) {
-            self.topicListData.push(json[0].type);
-            return json;
+            return dataset;
         })
-            .catch(function (error) {
-            self.topicListData.push([]);
-        });
-    };
-    // private _sendTopicListRequest1(data, key, uri, resolve, reject) {
-    // const self = this;
-    // this.http.get(uri).toPromise()
-    //     .then(response => response.json())
-    //     .then(json => {
-    //         console.log('%cinside then', 'font-weight:bold', 'key', key);
-    //         self.topicListReceived.push(json[0].type);
-    //         data.push(json);
-    //         handlePromise(data, resolve, reject);
-    //         return json;
-    //     })
-    //     .catch(error => {
-    //         console.log('%cinside catch', 'font-weight:bold', 'key', key);
-    //         data.push([]);
-    //         handlePromise(data, resolve, reject);
-    //         console.warn(`Caught error while requesting "${key}"`);
-    //     })
-    // ;
-    // }
-    TopicsService.prototype._confirmDataReadiness = function () {
-        var _this = this;
-        this.topicListPostTypes.forEach(function (postType) {
-            if (!inArray(_this.topicListReceived, postType)) {
-                console.log('not ready!');
-                return false;
-            }
-        });
-        return true;
+            .catch(function (error) { return console.error(error); });
     };
     TopicsService.prototype._getRequest = function (uri) {
         return this.http.get(uri).toPromise();
@@ -165,28 +86,9 @@ function processApiData(topics) {
         }
         procTopic.push(tmpObj);
     });
-    console.log('processed topics: ', procTopic);
     return topics;
 }
 function inArray(haystack, needle) {
     return haystack.indexOf(needle) > -1;
-}
-function noResultsReturned(data) {
-    return (data.quotes === [] && data.verses === []);
-}
-function dataIsReady(data) {
-    return data.quotes !== [] && data.verses !== [] &&
-        data.quotes !== null && data.verses !== null;
-}
-function handlePromise(data, resolve, reject) {
-    console.log('data', data);
-    if (dataIsReady(data)) {
-        console.log('resolve it!');
-        resolve(data);
-    }
-    else if (noResultsReturned(data)) {
-        console.log('reject it!');
-        reject(data);
-    } // else, do nothing else
 }
 //# sourceMappingURL=topics.service.js.map
