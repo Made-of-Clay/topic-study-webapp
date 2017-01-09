@@ -39,6 +39,7 @@ var TopicsComponent = (function () {
         })
             .catch(function (error) {
             console.log('!! error', error);
+            // this.topicLoadError.emit('1');
         });
     };
     TopicsComponent.prototype.filterTopic = function (searched, slug, name) {

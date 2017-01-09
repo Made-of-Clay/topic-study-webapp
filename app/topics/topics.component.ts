@@ -43,6 +43,7 @@ export class TopicsComponent implements OnInit {
             })
             .catch(error => {
                 console.log('!! error', error);
+                // this.topicLoadError.emit('1');
             })
         ;
     }
