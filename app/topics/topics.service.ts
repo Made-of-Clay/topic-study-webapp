@@ -57,6 +57,8 @@ export class TopicsService {
                 let dataset = [];
                 results.map(result => {
                     let data = result.json();
+                    // console.log('result', result);
+                    // let data = result;
                     dataset.push(data);
                 });
                 return dataset;

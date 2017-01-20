@@ -58,6 +58,8 @@ var TopicsService = (function () {
             var dataset = [];
             results.map(function (result) {
                 var data = result.json();
+                // console.log('result', result);
+                // let data = result;
                 dataset.push(data);
             });
             return dataset;
