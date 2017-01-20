@@ -56,8 +56,9 @@ export class TopicsService {
             .then(results => {
                 let dataset = [];
                 results.map(result => {
-                    let data = result.json();
-                    // console.log('result', result);
+                    console.log('result', result);
+                    // let data = result.json();
+                    let data = JSON.parse(result._body); // typescript is giving error that _body isn't property... but it works.... weird
                     // let data = result;
                     dataset.push(data);
                 });
