@@ -13,9 +13,5 @@ export class TopicPostComponent implements OnInit {
 
     constructor(private topicService: TopicsService) {}
 
-    ngOnInit(): void {
-        // this.get
-        // GET both verses and quotes using service in ex. page
-        // http://www.metaltoad.com/blog/angular-2-http-observables
-    }
+    ngOnInit(): void {}
 }

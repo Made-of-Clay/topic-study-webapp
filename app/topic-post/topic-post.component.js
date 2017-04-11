@@ -14,11 +14,7 @@ var TopicPostComponent = (function () {
     function TopicPostComponent(topicService) {
         this.topicService = topicService;
     }
-    TopicPostComponent.prototype.ngOnInit = function () {
-        // this.get
-        // GET both verses and quotes using service in ex. page
-        // http://www.metaltoad.com/blog/angular-2-http-observables
-    };
+    TopicPostComponent.prototype.ngOnInit = function () { };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)

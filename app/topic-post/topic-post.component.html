@@ -1,8 +1,8 @@
-<article class="card" *ngIf="!topicData">
+<article class="card" *ngIf="!data.length">
     No topics have been loaded yet!
 </article>
 
-<article class="card" *ngFor="let post of topicData">
-    <span class="quote">{{post.content.rendered}}</span>
-    <h1 class="quoted">{{topic.title.rendered}}</h1>
+<article class="card" *ngFor="let post of data">
+    <span class="quote" [innerHTML]="post.content.rendered"></span>
+    <h1 class="quoted">{{post.title.rendered}}</h1>
 </article>
