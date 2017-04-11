@@ -45,31 +45,40 @@ export class TopicsService {
     }
 
     getTopicList(slug: string): Promise<any> {
-        var types = ['quotes', 'verses'];
-
-        var reqs = types.map(type => {
-            let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
-            return this._getRequest(uri);
-        });
-
-        return Promise.all(reqs)
-            .then(results => {
-                let dataset = [];
-                results.map(result => {
-                    console.log('result', result);
-                    // let data = result.json();
-                    let data = JSON.parse(result._body); // typescript is giving error that _body isn't property... but it works.... weird
-                    // let data = result;
-                    dataset.push(data);
-                });
-                return dataset;
-            })
-            .catch(error => console.error(error))
+        return this._getRequest(`${this.topicUrl}/topic?filter[tag]=${slug}`)
+            .then(response => response.json())
+            // .catch(error => console.error(error))
+            .catch(this._requestError)
         ;
+        // var types = ['quotes', 'verses'];
+
+        // var reqs = types.map(type => {
+        //     let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
+        //     return this._getRequest(uri);
+        // });
+
+        // return Promise.all(reqs)
+        //     .then(results => {
+        //         let dataset = [];
+        //         results.map(result => {
+        //             console.log('result', result);
+        //             let data = result.json();
+        //             // let data = JSON.parse(result._body); // typescript is giving error that _body isn't property... but it works.... weird
+        //             // let data = result;
+        //             dataset.push(data);
+        //         });
+        //         return dataset;
+        //     })
+        //     .catch(error => console.error(error))
+        // ;
     }
 
     private _getRequest(uri: string) {
         return this.http.get(uri).toPromise();
+    }
+
+    private _requestError() {
+        return error => { console.error('Topic Service:', error) };
     }
 }
 function processApiData(topics: Topic[]) {

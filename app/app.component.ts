@@ -8,7 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
     topicData = [];
 
+    /**
+     * This method is just a setter for passing data along to topic-post-component
+     * @param {object} data Data fetched from topics.service
+     */
     passTopicData(data): void {
+        console.log('data',data);
         this.topicData = data;
     }
 }

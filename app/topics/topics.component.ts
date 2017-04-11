@@ -39,7 +39,7 @@ export class TopicsComponent implements OnInit {
         this.topicService.getTopicList(slug)
             .then(data => {
                 console.log('!! data', data);
-                // this.topicLoaded.emit(data);
+                this.topicLoaded.emit(data);
             })
             .catch(error => {
                 console.log('!! error', error);

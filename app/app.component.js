@@ -13,7 +13,12 @@ var AppComponent = (function () {
     function AppComponent() {
         this.topicData = [];
     }
+    /**
+     * This method is just a setter for passing data along to topic-post-component
+     * @param {object} data Data fetched from topics.service
+     */
     AppComponent.prototype.passTopicData = function (data) {
+        console.log('data', data);
         this.topicData = data;
     };
     AppComponent = __decorate([

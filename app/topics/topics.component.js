@@ -32,10 +32,11 @@ var TopicsComponent = (function () {
         }
     };
     TopicsComponent.prototype.getTopicList = function (slug) {
+        var _this = this;
         this.topicService.getTopicList(slug)
             .then(function (data) {
             console.log('!! data', data);
-            // this.topicLoaded.emit(data);
+            _this.topicLoaded.emit(data);
         })
             .catch(function (error) {
             console.log('!! error', error);
