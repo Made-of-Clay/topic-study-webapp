@@ -24,7 +24,6 @@ var TopicsService = (function () {
         this.http = http;
         this.topicUrl = 'http://adamleis.com/topic-study/api/wp-json/wp/v2';
         this.topicListPostTypes = ['verses', 'quotes'];
-        console.log('topicsService constructed');
     }
     Object.defineProperty(TopicsService.prototype, "rawData", {
         get: function () {
@@ -43,37 +42,19 @@ var TopicsService = (function () {
             .catch(this.handleError);
     };
     TopicsService.prototype.handleError = function (error) {
-        console.error('An error occurred', error);
+        // console.error('An error occurred', error);
+        this._logError();
         return Promise.reject(error.message || error);
     };
-    TopicsService.prototype.getTopicList = function (slug) {
-        return this._getRequest(this.topicUrl + "/topic?filter[tag]=" + slug)
+    TopicsService.prototype.getTopicList = function (id) {
+        return this._getRequest(this.topicUrl + "/topic?tags=" + id)
             .then(function (response) { return response.json(); })
-            .catch(this._requestError);
-        // var types = ['quotes', 'verses'];
-        // var reqs = types.map(type => {
-        //     let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
-        //     return this._getRequest(uri);
-        // });
-        // return Promise.all(reqs)
-        //     .then(results => {
-        //         let dataset = [];
-        //         results.map(result => {
-        //             console.log('result', result);
-        //             let data = result.json();
-        //             // let data = JSON.parse(result._body); // typescript is giving error that _body isn't property... but it works.... weird
-        //             // let data = result;
-        //             dataset.push(data);
-        //         });
-        //         return dataset;
-        //     })
-        //     .catch(error => console.error(error))
-        // ;
+            .catch(this._logError);
     };
     TopicsService.prototype._getRequest = function (uri) {
         return this.http.get(uri).toPromise();
     };
-    TopicsService.prototype._requestError = function () {
+    TopicsService.prototype._logError = function () {
         return function (error) { console.error('Topic Service:', error); };
     };
     TopicsService = __decorate([

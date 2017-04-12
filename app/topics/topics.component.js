@@ -31,12 +31,12 @@ var TopicsComponent = (function () {
             this.topicService.getTopics().then(function (topics) { return _this.topics = topics; });
         }
     };
-    TopicsComponent.prototype.getTopicList = function (slug) {
+    TopicsComponent.prototype.getTopicList = function (id, name) {
         var _this = this;
-        this.topicService.getTopicList(slug)
+        this.topicService.getTopicList(id)
             .then(function (data) {
             console.log('!! data', data);
-            _this.topicLoaded.emit(data);
+            _this.topicLoaded.emit({ posts: data, tagName: name });
         })
             .catch(function (error) {
             console.log('!! error', error);

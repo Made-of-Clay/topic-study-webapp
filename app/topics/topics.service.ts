@@ -28,7 +28,6 @@ export class TopicsService {
     }
 
     constructor(private http: Http) {
-        console.log('topicsService constructed');
     }
 
     getTopics(): Promise<Topic[]> {
@@ -40,44 +39,23 @@ export class TopicsService {
             .catch(this.handleError);
     }
     private handleError(error): Promise<any> {
-        console.error('An error occurred', error);
+        // console.error('An error occurred', error);
+        this._logError();
         return Promise.reject(error.message || error);
     }
 
-    getTopicList(slug: string): Promise<any> {
-        return this._getRequest(`${this.topicUrl}/topic?filter[tag]=${slug}`)
+    getTopicList(id: string): Promise<any> {
+        return this._getRequest(`${this.topicUrl}/topic?tags=${id}`)
             .then(response => response.json())
-            // .catch(error => console.error(error))
-            .catch(this._requestError)
+            .catch(this._logError)
         ;
-        // var types = ['quotes', 'verses'];
-
-        // var reqs = types.map(type => {
-        //     let uri = `${this.topicUrl}/${type}?filter[tag]=${slug}`;
-        //     return this._getRequest(uri);
-        // });
-
-        // return Promise.all(reqs)
-        //     .then(results => {
-        //         let dataset = [];
-        //         results.map(result => {
-        //             console.log('result', result);
-        //             let data = result.json();
-        //             // let data = JSON.parse(result._body); // typescript is giving error that _body isn't property... but it works.... weird
-        //             // let data = result;
-        //             dataset.push(data);
-        //         });
-        //         return dataset;
-        //     })
-        //     .catch(error => console.error(error))
-        // ;
     }
 
     private _getRequest(uri: string) {
         return this.http.get(uri).toPromise();
     }
 
-    private _requestError() {
+    private _logError() {
         return error => { console.error('Topic Service:', error) };
     }
 }

@@ -35,11 +35,11 @@ export class TopicsComponent implements OnInit {
         }
     }
 
-    getTopicList(slug: string) {
-        this.topicService.getTopicList(slug)
+    getTopicList(id: string, name: string): void {
+        this.topicService.getTopicList(id)
             .then(data => {
                 console.log('!! data', data);
-                this.topicLoaded.emit(data);
+                this.topicLoaded.emit({posts: data, tagName: name});
             })
             .catch(error => {
                 console.log('!! error', error);

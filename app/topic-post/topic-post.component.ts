@@ -9,9 +9,18 @@ import { TopicsService } from '../topics/topics.service';
 })
 
 export class TopicPostComponent implements OnInit {
-    @Input() data;
+    @Input() topicPostData;
+
+    posts = [];
+    tagName = '';
 
     constructor(private topicService: TopicsService) {}
 
     ngOnInit(): void {}
+    ngOnChanges(): void {
+        if (this.topicPostData.posts) {
+            this.posts = this.topicPostData.posts.length ? this.topicPostData.posts : [];
+            this.tagName = this.topicPostData.tagName;
+        }
+    }
 }

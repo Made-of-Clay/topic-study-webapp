@@ -13,12 +13,20 @@ var topics_service_1 = require('../topics/topics.service');
 var TopicPostComponent = (function () {
     function TopicPostComponent(topicService) {
         this.topicService = topicService;
+        this.posts = [];
+        this.tagName = '';
     }
     TopicPostComponent.prototype.ngOnInit = function () { };
+    TopicPostComponent.prototype.ngOnChanges = function () {
+        if (this.topicPostData.posts) {
+            this.posts = this.topicPostData.posts.length ? this.topicPostData.posts : [];
+            this.tagName = this.topicPostData.tagName;
+        }
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], TopicPostComponent.prototype, "data", void 0);
+    ], TopicPostComponent.prototype, "topicPostData", void 0);
     TopicPostComponent = __decorate([
         core_1.Component({
             selector: 'moc-topic-post',

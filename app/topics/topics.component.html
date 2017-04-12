@@ -12,7 +12,7 @@
     <!-- *ngIf="searchTerm"  (will this hide unless search matches? How do I show all but hide when searchTerm is truthy?) -->
     <div class="topic-name topic-{{topic.slug}}"
         *ngIf="filterTopic(searchTerm, topic.slug, topic.name)"
-        (click)="getTopicList(topic.slug)">
+        (click)="getTopicList(topic.id, topic.name)">
         {{topic.name}} ({{topic.count}})
     </div>
 
