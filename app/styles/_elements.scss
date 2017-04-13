@@ -2,10 +2,48 @@ body {
     background-color: #eee;
 }
 
+*:focus {
+    outline: 1px solid $secondary;
+}
+
 .card {
     background-color: #fafafa;
     border-radius: 3px;
     box-shadow: 0 0 2px #aaa, 0 1px 5px rgba(#777, 0.25);
     box-sizing: border-box;
+    margin-bottom: 1em;
     padding: 0.75em;
+}
+.quote {
+    display: block;
+    position: relative;
+
+    @at-root %quote-pseudos {
+        color: rgba(black, 0.1);
+        font-size: 11em;
+        line-height: 0.5;
+        position: absolute;
+    }
+    &::before {
+        @extend %quote-pseudos;
+        content: '\201c';
+        left: 0;
+        top: 0;
+    }
+    &::after {
+        @extend %quote-pseudos;
+        content: '\201d';
+        right: 0;
+        top: 100%;
+    }
+}
+.quoted {
+    font-size: 1.25em;
+    text-align: right;
+
+    &::before {
+        content: '-';
+        display: inline-block;
+        margin-right: 0.5em;
+    }
 }

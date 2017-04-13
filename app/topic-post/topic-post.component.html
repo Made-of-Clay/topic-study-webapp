@@ -1,10 +1,15 @@
-<article class="card" *ngIf="!posts.length">
-    No topics have been loaded yet!
-</article>
+<div class="no-topics-to-show" *ngIf="!posts.length">
+    <article class="card">
+        No topics have been loaded yet!
+    </article>
+</div>
 
-<h1 class="topic-name">{{tagName}}</h1>
+<div class="topics-wrapper" *ngIf="posts.length">
+    <!-- <h1 class="topic-name">Topic: {{tagName}}</h1> -->
+    
+    <article class="card" *ngFor="let post of posts">
+        <span class="quote" [innerHTML]="post.content.rendered"></span>
+        <h1 class="quoted">{{post.title.rendered}}</h1>
+    </article>
+</div>
 
-<article class="card" *ngFor="let post of posts">
-    <span class="quote" [innerHTML]="post.content.rendered"></span>
-    <h1 class="quoted">{{post.title.rendered}}</h1>
-</article>

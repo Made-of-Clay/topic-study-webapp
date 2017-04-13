@@ -1,0 +1,19 @@
+moc-topics {
+    .topic-name {
+        cursor: pointer;
+        margin-top: 0.25em;
+        padding: 0.25em;
+        transition: all 0.3s;
+
+        &:hover {
+            // background-color: rgba(black, 0.25);
+            background-color: $secondary-light;
+            color: $secondary-text-normal;
+        }
+    }
+    .topics-filter-input {
+        display: inline-block;
+        margin-bottom: 0.5em;
+        padding: 0.25em;
+    }
+}

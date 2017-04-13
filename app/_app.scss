@@ -1,0 +1,22 @@
+#main-header {
+    background-color: $primary;
+
+    > h1 {
+        color: $primary-text-bold;
+        content: '';
+    }
+    > button {
+        background-color: transparent;
+        border: none;
+        color: $primary-text-bold;
+        font-weight: bold;
+        padding: 0.5em 0.75em;
+    }
+    .topic-name {
+        &::before {
+            content: ':';
+            display: inline-block;
+            margin-right: 0.5em;
+        }
+    }
+}
