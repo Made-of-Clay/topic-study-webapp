@@ -8,7 +8,8 @@
         "postinstall": "typings install",
         "tsc": "tsc",
         "tsc:w": "tsc -w",
-        "typings": "typings"
+        "typings": "typings",
+        "sass": "sass app:dist/css --watch"
     },
     "repository": {
         "type": "git",
