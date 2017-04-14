@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
     topicData = [];
+    topicsListShowing = true;
 
     /**
      * This method is just a setter for passing data along to topic-post-component
@@ -15,5 +16,9 @@ export class AppComponent {
     passTopicData(data): void {
         console.log('data',data);
         this.topicData = data;
+    }
+
+    toggleTopicList() {
+        this.topicsListShowing = !this.topicsListShowing;
     }
 }

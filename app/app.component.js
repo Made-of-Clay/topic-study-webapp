@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var AppComponent = (function () {
     function AppComponent() {
         this.topicData = [];
+        this.topicsListShowing = true;
     }
     /**
      * This method is just a setter for passing data along to topic-post-component
@@ -20,6 +21,9 @@ var AppComponent = (function () {
     AppComponent.prototype.passTopicData = function (data) {
         console.log('data', data);
         this.topicData = data;
+    };
+    AppComponent.prototype.toggleTopicList = function () {
+        this.topicsListShowing = !this.topicsListShowing;
     };
     AppComponent = __decorate([
         core_1.Component({

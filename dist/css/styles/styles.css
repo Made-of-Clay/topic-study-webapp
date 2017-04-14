@@ -444,16 +444,24 @@ topic-study-app::after {
     vertical-align: middle; }
 
 .l-sidebar {
+  background-color: white;
+  box-shadow: 0 0 2px #aaa, 0 8px 12px rgba(119, 119, 119, 0.5);
   box-sizing: border-box;
-  float: left;
-  margin-right: 1em;
-  outline: 1px solid;
+  height: 94%;
   padding: 1em;
-  width: 15em; }
+  position: absolute;
+  top: 3.25em;
+  transition: all 0.3s;
+  transform: translateX(-15em);
+  width: 15em;
+  z-index: 10; }
+  .l-sidebar.is-showing {
+    transform: translateX(0); }
 
 .l-content {
   box-sizing: border-box;
   float: left;
-  width: calc(100% - 17em); }
+  padding: 1em;
+  width: 100%; }
 
 /*# sourceMappingURL=styles.css.map */
