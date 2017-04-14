@@ -2,7 +2,7 @@
     <button>☰</button>
     <h1>
         <span>Topic Study</span>
-        <span class="topic-name">{{topicData.tagName}}</span>
+        <span class="topic-name" *ngIf="topicData.tagName">{{topicData.tagName}}</span>
     </h1>
 </header>
 
