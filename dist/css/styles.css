@@ -463,5 +463,8 @@ topic-study-app::after {
   float: left;
   padding: 1em;
   width: 100%; }
+  @media screen and (min-width: 800px) {
+    .is-showing + .l-content {
+      padding-left: 16em; } }
 
 /*# sourceMappingURL=styles.css.map */

@@ -47,4 +47,10 @@ topic-study-app {
     float: left;
     padding: 1em;
     width: 100%;
+
+    .is-showing + & {
+        @include bp(800px) {
+            padding-left: 16em;
+        }
+    }
 }
