@@ -1,17 +1,21 @@
 <header id="main-header" class="l-header">
-    <button (click)="toggleTopicList()">☰</button>
+    <button (click)="toggleTopicList()" class="icon-menu">
+        <img src="/dist/images/ic_menu_white_24px.svg" alt="☰">
+    </button><!-- hamburger icon -->
     <h1>
         <span>Topic Study</span>
         <span class="topic-name" *ngIf="topicData.tagName">{{topicData.tagName}}</span>
     </h1>
 </header>
 
-<aside id="main-sidebar" class="l-sidebar" [ngClass]="{'is-showing':topicsListShowing}">
-    <moc-topics (topicLoaded)="passTopicData($event)">Fetching Topics...</moc-topics>
-</aside>
+<div class="l-content-wrapper main-wrapper">
+    <aside id="main-sidebar" class="l-sidebar" [ngClass]="{'is-showing':topicsListShowing}">
+        <moc-topics (topicLoaded)="passTopicData($event)">Fetching Topics...</moc-topics>
+    </aside>
 
-<div id="main-content" class="l-content">
-    <div class="topic-posts">
-        <moc-topic-post [topicPostData]="topicData"></moc-topic-post>
+    <div id="main-content" class="l-content">
+        <div class="topic-posts">
+            <moc-topic-post [topicPostData]="topicData"></moc-topic-post>
+        </div>
     </div>
 </div>

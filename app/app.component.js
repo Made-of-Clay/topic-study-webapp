@@ -14,6 +14,11 @@ var AppComponent = (function () {
         this.topicData = [];
         this.topicsListShowing = true;
     }
+    AppComponent.prototype.ngOnInit = function () {
+        if (window.innerWidth < 800) {
+            this.topicsListShowing = false;
+        }
+    };
     /**
      * This method is just a setter for passing data along to topic-post-component
      * @param {object} data Data fetched from topics.service

@@ -28,7 +28,7 @@ body {
         @extend %quote-pseudos;
         content: '\201c';
         left: 0;
-        top: 0;
+        top: 5%;
     }
     &::after {
         @extend %quote-pseudos;

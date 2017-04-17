@@ -5,12 +5,14 @@
         color: $primary-text-bold;
         content: '';
     }
-    > button {
+    .icon-menu {
         background-color: transparent;
         border: none;
         color: $primary-text-bold;
+        display: inline-block;
         font-weight: bold;
         padding: 0.5em 0.75em;
+        vertical-align: middle;
     }
     .topic-name {
         &::before {

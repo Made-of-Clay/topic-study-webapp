@@ -9,6 +9,12 @@ export class AppComponent {
     topicData = [];
     topicsListShowing = true;
 
+    ngOnInit(): void {
+        if (window.innerWidth < 800) {
+            this.topicsListShowing = false;
+        }
+    }
+
     /**
      * This method is just a setter for passing data along to topic-post-component
      * @param {object} data Data fetched from topics.service
