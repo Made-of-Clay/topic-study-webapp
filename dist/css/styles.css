@@ -435,6 +435,60 @@ moc-topics .topics-filter-input {
     display: inline-block;
     margin-right: 0.5em; }
 
+.loader {
+  left: 0;
+  position: fixed;
+  transition: transform 0.2s;
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50% 22%;
+  -moz-transform-origin: 50% 22%;
+  -ms-transform-origin: 50% 22%;
+  -o-transform-origin: 50% 22%;
+  transform-origin: 50% 22%;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100; }
+  .loader.is-showing {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1); }
+
+.circular {
+  animation: rotate 2s linear infinite;
+  left: calc(50% - 25px);
+  position: absolute;
+  top: 20%;
+  height: 50px;
+  width: 50px; }
+
+.path {
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite, color 2s ease-in-out infinite;
+  stroke-linecap: round;
+  stroke: #3f88f8;
+  stroke: #7c43bd; }
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg); } }
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35; }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124; } }
 html, body, topic-study-app {
   height: 100%; }
 

@@ -24,7 +24,7 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
-                forms_1.FormsModule
+                forms_1.FormsModule,
             ],
             declarations: [
                 app_component_1.AppComponent,
@@ -32,7 +32,7 @@ var AppModule = (function () {
                 topic_post_component_1.TopicPostComponent
             ],
             providers: [
-                topics_service_1.TopicsService
+                topics_service_1.TopicsService,
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

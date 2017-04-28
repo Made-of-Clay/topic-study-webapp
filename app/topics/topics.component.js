@@ -9,18 +9,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/*
-    - getTopicList() returns data from service
-    - this component should emit the data
-    - topic-list.component will then receive it
-    - display topic-list data from there...
- */
 var core_1 = require('@angular/core');
 var topics_service_1 = require('./topics.service');
 var TopicsComponent = (function () {
     function TopicsComponent(topicService) {
         this.topicService = topicService;
         this.topicLoaded = new core_1.EventEmitter();
+        this.topicLoading = new core_1.EventEmitter();
     }
     TopicsComponent.prototype.ngOnInit = function () {
         this.getTopics();
@@ -33,9 +28,10 @@ var TopicsComponent = (function () {
     };
     TopicsComponent.prototype.getTopicList = function (id, name) {
         var _this = this;
+        this.topicLoading.emit(true);
         this.topicService.getTopicList(id)
             .then(function (data) {
-            console.log('!! data', data);
+            _this.topicLoading.emit(false);
             _this.topicLoaded.emit({ posts: data, tagName: name });
         })
             .catch(function (error) {
@@ -56,6 +52,10 @@ var TopicsComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], TopicsComponent.prototype, "topicLoaded", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], TopicsComponent.prototype, "topicLoading", void 0);
     TopicsComponent = __decorate([
         core_1.Component({
             selector: 'moc-topics',

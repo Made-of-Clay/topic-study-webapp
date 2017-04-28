@@ -22,3 +22,59 @@
         }
     }
 }
+
+.loader {
+    left: 0;
+    position: fixed;
+    transition: transform 0.2s;
+    @include transform(scale(0));
+    @include transform-origin(50% 22%);
+    top: 0;
+    @include size(100%);
+    z-index: 100;
+
+    &.is-showing {
+        @include transform(scale(1));
+    }
+}
+
+.circular {
+    $loader-size: 50px;
+    animation: rotate 2s linear infinite;
+    left: calc(50% - #{$loader-size / 2});
+    position: absolute;
+    top: 20%;
+    @include size($loader-size);
+}
+
+.path {
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+  animation: 
+   dash 1.5s ease-in-out infinite,
+   color 2s ease-in-out infinite
+  ;
+  stroke-linecap: round;
+  stroke: #3f88f8;
+  stroke: $primary-light;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+  }
+}

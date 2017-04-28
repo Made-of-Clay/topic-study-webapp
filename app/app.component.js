@@ -13,11 +13,16 @@ var AppComponent = (function () {
     function AppComponent() {
         this.topicData = [];
         this.topicsListShowing = true;
+        this.topicsLoading = false;
     }
     AppComponent.prototype.ngOnInit = function () {
-        if (window.innerWidth < 800) {
-            this.topicsListShowing = false;
-        }
+        this.checkTopicsListVisibility();
+    };
+    AppComponent.prototype.checkTopicsListVisibility = function () {
+        this.topicsListShowing = !this.smallScreen();
+    };
+    AppComponent.prototype.smallScreen = function () {
+        return window.innerWidth < 800;
     };
     /**
      * This method is just a setter for passing data along to topic-post-component
@@ -26,13 +31,18 @@ var AppComponent = (function () {
     AppComponent.prototype.passTopicData = function (data) {
         console.log('data', data);
         this.topicData = data;
+        this.checkTopicsListVisibility();
     };
     AppComponent.prototype.toggleTopicList = function () {
         this.topicsListShowing = !this.topicsListShowing;
     };
+    AppComponent.prototype.setTopicLoading = function (isLoading) {
+        this.topicsLoading = isLoading;
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'topic-study-app',
+            providers: [],
             templateUrl: 'app/app.component.html'
         }), 
         __metadata('design:paramtypes', [])

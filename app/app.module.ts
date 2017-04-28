@@ -12,7 +12,7 @@ import { TopicsService } from './topics/topics.service';
     imports: [
         BrowserModule,
         HttpModule,
-        FormsModule
+        FormsModule,
     ],
     declarations: [
         AppComponent,
@@ -20,7 +20,7 @@ import { TopicsService } from './topics/topics.service';
         TopicPostComponent
     ],
     providers: [
-        TopicsService
+        TopicsService,
     ],
     bootstrap: [ AppComponent ]
 })

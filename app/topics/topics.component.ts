@@ -1,13 +1,6 @@
 /// <reference path="topic.d.ts" />
 
-/*
-    - getTopicList() returns data from service
-    - this component should emit the data
-    - topic-list.component will then receive it
-    - display topic-list data from there...
- */
-
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TopicsService } from './topics.service';
 import { TopicPostComponent } from '../topic-post/topic-post.component';
 
@@ -19,6 +12,7 @@ import { TopicPostComponent } from '../topic-post/topic-post.component';
 
 export class TopicsComponent implements OnInit {
     @Output() topicLoaded = new EventEmitter();
+    @Output() topicLoading = new EventEmitter();
 
     topics: Topic[];
     searchTerm: string;
@@ -36,9 +30,11 @@ export class TopicsComponent implements OnInit {
     }
 
     getTopicList(id: string, name: string): void {
+        this.topicLoading.emit(true);
+
         this.topicService.getTopicList(id)
             .then(data => {
-                console.log('!! data', data);
+                this.topicLoading.emit(false);
                 this.topicLoaded.emit({posts: data, tagName: name});
             })
             .catch(error => {
