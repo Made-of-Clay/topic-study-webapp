@@ -7,9 +7,53 @@
     
     <link rel="stylesheet" href="dist/css/styles.css">
 
+    <style>
+        /* TODO: move this to right spot */
+        .is-hidden {
+            display: none;
+        }
+    </style>
+
     <script src="https://unpkg.com/vue@2.3.2"></script>
+    <script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
 </head>
 <body>
-    <topic-study-app>Loading Topics App...</topic-study-app>
+    <div id="app">
+        <header id="main-header" class="l-header">
+            <button @click="toggleTopicList" class="icon-menu">
+                <img src="/dist/images/ic_menu_white_24px.svg" alt="☰">
+            </button><!-- hamburger icon -->
+            <h1>
+                <span>Topic Study</span>
+                <!-- TODO: fix this to work better -->
+                <span class="topic-name" v-bind:class="{ 'is-hidden': topicData.tagName }" class="is-hidden">{{topicData.tagName}}</span>
+            </h1>
+        </header>
+
+        <!-- <div class="l-content-wrapper main-wrapper">
+            <aside id="main-sidebar" class="l-sidebar" 
+                   [ngClass]="{'is-showing':topicsListShowing}">
+                <moc-topics (topicLoaded)="passTopicData($event)"
+                            (topicLoading)="setTopicLoading($event)">Fetching Topics...</moc-topics>
+            </aside>
+
+            <div id="main-content" class="l-content">
+                <div class="loader" [ngClass]="{'is-showing':topicsLoading}">
+                    <svg class="circular" height="50" width="50">
+                        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="6" stroke-miterlimit="10" />
+                    </svg>
+                </div>
+                <div class="topic-posts">
+                    <moc-topic-post [topicPostData]="topicData"></moc-topic-post>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <script src="/node_modules/systemjs/dist/system.js"></script>
+    <script src="/systemjs.config.js"></script>
+    <script>
+        SystemJS.import('app');
+    </script>
 </body>
 </html>

@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/Made-of-Clay/topic-study-webapp#readme",
   "dependencies": {
+    "systemjs": "^0.20.12",
+    "vue-resource": "^1.3.1"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
