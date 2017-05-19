@@ -1,0 +1,10 @@
+<header id="main-header" class="l-header">
+    <button @click="toggleTopicList" class="icon-menu">
+        <img src="/dist/images/ic_menu_white_24px.svg" alt="☰">
+    </button><!-- hamburger icon -->
+    <h1>
+        <span>Topic Study</span>
+        <!-- TODO: fix this to work better -->
+        <span class="topic-name" v-show="topicData.tagName" style="display:none">{{topicData.tagName}}</span>
+    </h1>
+</header>

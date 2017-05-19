@@ -5,7 +5,8 @@
         data: {
             // variables the template
             // foo: null
-            topicData: {tagName:null}
+            topicData: { tagName: null },
+            topicsListShowing: true
         },
 
         // watch (, created, destroyed, etc...) are life-cycle hooks

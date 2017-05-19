@@ -1,22 +1,19 @@
-<header id="main-header" class="l-header">
-    <button (click)="toggleTopicList()" class="icon-menu">
-        <img src="/dist/images/ic_menu_white_24px.svg" alt="☰">
-    </button><!-- hamburger icon -->
-    <h1>
-        <span>Topic Study</span>
-        <span class="topic-name" *ngIf="topicData.tagName">{{topicData.tagName}}</span>
-    </h1>
-</header>
+<app-header></app-header>
 
 <div class="l-content-wrapper main-wrapper">
     <aside id="main-sidebar" class="l-sidebar" 
-           [ngClass]="{'is-showing':topicsListShowing}">
-        <moc-topics (topicLoaded)="passTopicData($event)"
-                    (topicLoading)="setTopicLoading($event)">Fetching Topics...</moc-topics>
+        v-bind:class="{'is-showing':topicsListShowing}">
+        foo
+        topics (list) has search and list of topics
+        topicLoaded event from component gives data
+            once topic is clicked
+        topicLoading triggers while topic is ajaxing
+        <!-- <moc-topics (topicLoaded)="passTopicData($event)"
+                    (topicLoading)="setTopicLoading($event)">Fetching Topics...</moc-topics> -->
     </aside>
 
-    <div id="main-content" class="l-content">
-        <div class="loader" [ngClass]="{'is-showing':topicsLoading}"> <!-- *ngIf="topicsLoading"  -->
+<!--     <div id="main-content" class="l-content">
+        <div class="loader" [ngClass]="{'is-showing':topicsLoading}">
             <svg class="circular" height="50" width="50">
                 <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="6" stroke-miterlimit="10" />
             </svg>
@@ -24,5 +21,5 @@
         <div class="topic-posts">
             <moc-topic-post [topicPostData]="topicData"></moc-topic-post>
         </div>
-    </div>
+    </div> -->
 </div>
