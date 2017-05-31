@@ -1,0 +1,76 @@
+body {
+    background-color: #eee;
+    line-height: 1.5;
+}
+html, body, .app-wrapper {
+    height: 100%;
+}
+*:focus {
+    outline: 1px solid #ffd600;
+}
+
+.background-color-primary {
+    background-color: #4a148c;
+    color: rgba(255, 255, 255, 80);
+}
+.text-color-primary {
+    color: #4a148c;
+}
+.border-color-primary {
+    border-color: #4a148c;
+}
+
+.background-color-primary-light {
+    background-color: #7c43bd;
+    color: rgba(255, 255, 255, 80);
+}
+.text-color-primary-light {
+    color: #7c43bd;
+}
+.border-color-primary-light {
+    border-color: #7c43bd;
+}
+
+.background-color-primary-dark {
+    background-color: #12005e;
+    color: rgba(255, 255, 255, 65);
+}
+.text-color-primary-dark {
+    color: #12005e;
+}
+.border-color-primary-dark {
+    border-color: #12005e;
+}
+
+.background-color-secondary {
+    background-color: #ffd600;
+    color: rgba(0, 0, 0, 80);
+}
+.text-color-secondary {
+    color: #ffd600;
+}
+.border-color-secondary {
+    border-color: #ffd600;
+}
+
+.background-color-secondary-light {
+    background-color: #ffff52;
+    color: rgba(0, 0, 0, 65);
+}
+.text-color-secondary-light {
+    color: #ffff52;
+}
+.border-color-secondary-light {
+    border-color: #ffff52;
+}
+
+.background-color-secondary-dark {
+    background-color: #c7a500;
+    color: rgba(0, 0, 0, 80);
+}
+.text-color-secondary-dark {
+    color: #c7a500;
+}
+.border-color-secondary-dark {
+    border-color: #c7a500;
+}
