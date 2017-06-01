@@ -21,6 +21,10 @@ export default {
 </script>
 
 <style scoped>
+.topics-wrapper {
+    margin: 0 auto;
+    max-width: 900px;
+}
 .card {
     background-color: #fafafa;
     border-radius: 3px;

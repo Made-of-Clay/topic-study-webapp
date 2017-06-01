@@ -60,3 +60,22 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.topic-name {
+    cursor: pointer;
+    padding: 0.25em;
+    transition: all 0.3s;
+    user-select: none;
+}
+.topic-name:hover {
+    background-color: #ffff52;
+    color: rgba(0, 0, 0, 65);
+}
+.topics-filter-input {
+    display: inline-block;
+    margin-bottom: 0.5em;
+    padding: 0.25em;
+    width: 90%;
+}
+</style>

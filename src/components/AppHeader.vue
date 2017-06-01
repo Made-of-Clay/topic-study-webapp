@@ -40,10 +40,14 @@ export default {
     vertical-align: middle;
 }
 @media screen and (min-width: 340px) {
-    font-size: 1.25em;
+    .app-header-heading {
+        font-size: 1.25em;
+    }
 }
 @media screen and (min-width: 475px) {
-    font-size: 1.75em;
+    .app-header-heading {
+        font-size: 1.75em;
+    }
 }
 .icon-menu {
     background-color: transparent;
