@@ -1,9 +1,6 @@
 {
   "name": "topic-study-vue",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
   "author": "Made-of-Clay <adam.m.leis@gmail.com>",
-  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",

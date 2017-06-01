@@ -7,7 +7,7 @@
         <article class="card" v-if="posts.length"
             v-for="post of posts">
 
-            <span class="quote" v-bind:html="post.content.rendered"></span>
+            <span class="quote" v-html="post.content.rendered"></span>
             <h1 class="quoted">{{post.title.rendered}}</h1>
         </article>
     </div>
@@ -19,3 +19,45 @@ export default {
     props: ['posts']
 };
 </script>
+
+<style scoped>
+.card {
+    background-color: #fafafa;
+    border-radius: 3px;
+    box-shadow: 0 0 2px #aaa, 0 1px 5px rgba(119, 119, 119, 0.25);
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    padding: 0.75em;
+}
+.quote {
+    display: block;
+    position: relative;
+}
+.quote::before ,
+.quote::after {
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 11em;
+    line-height: 0.5;
+    position: absolute;
+}
+.quote::before {
+    content: '\201c';
+    left: 0;
+    top: 5%;
+}
+.quote::after {
+    content: '\201d';
+    right: 0;
+    top: 100%;
+}
+
+.quoted {
+    font-size: 1.25em;
+    text-align: right;
+}
+.quoted::before {
+    content: '-';
+    display: inline-block;
+    margin-right: 0.5em;
+}
+</style>

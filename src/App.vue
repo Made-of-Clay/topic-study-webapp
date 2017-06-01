@@ -5,9 +5,10 @@
         <div class="content-wrapper">
             <app-drawer :topicListShowing="topicListShowing"
                 @topicLoading="setTopicLoading"
-                @topicPostsLoading="setTopicPostsLoading"></app-drawer>
+                @topicPostsLoading="setTopicPostsLoading"
+                @updateTopicPosts="setTopicPosts"></app-drawer>
             <app-content :topicPostsLoading="topicPostsLoading"
-                :topicData="topicData"></app-content>
+                :topicPosts="topicPosts"></app-content>
         </div>
     </div>
 </template>
@@ -24,7 +25,7 @@ export default {
             topicListShowing: true,
             topicLoading: false, // TODO: maybe remove this
             topicPostsLoading: false,
-            topicData: []
+            topicPosts: []
         };
     },
     components: {
@@ -41,6 +42,9 @@ export default {
         },
         setTopicPostsLoading(isLoading) {
             this.topicPostsLoading = isLoading;
+        },
+        setTopicPosts(topicPosts) {
+            this.topicPosts = topicPosts;
         }
     },
     created() {

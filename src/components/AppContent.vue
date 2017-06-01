@@ -6,7 +6,7 @@
             </svg>
         </div>
 
-        <topic-posts :posts="topicData"></topic-posts>
+        <topic-posts :posts="topicPosts"></topic-posts>
     </div>
 </template>
 
@@ -15,7 +15,7 @@ import TopicPosts from './TopicPost';
 
 export default {
     name: 'app-content',
-    props: ['topicPostsLoading', 'topicData'],
+    props: ['topicPostsLoading', 'topicPosts'],
     components: {
         'topic-posts': TopicPosts
     },

@@ -13,7 +13,7 @@
                     <!-- v-if="filterTopic(searchTerm, topic.slug, topic.name)" -->
             <div v-for="topic of topics" v-if="!topicsEmpty">
                 <div class="topic-name"
-                    @click="getTopicPosts(topic.id, topic.name)">
+                    @click="getTopicPosts(topic.id)">
                         {{topic.name}} ({{topic.count}})
                     </div>
             </div>
@@ -26,13 +26,14 @@ export default {
     name: 'topics',
     data() {
         return {
-            topics: {},
+            topics: [],
             searchTerm: ''
         };
     },
     computed: {
         topicsEmpty() {
-            return Object.keys(this.topics).length === 0;
+            return this.topics.length === 0;
+            // return Object.keys(this.topics).length === 0;
         }
     },
     created(topicsService) {
@@ -49,10 +50,12 @@ export default {
                 ;
             }
         },
-        getTopicPosts(id, name) {
+        getTopicPosts(id) {
             this.$emit('topicPostsLoading', true);
-            this.topicsService.getTopicList()
-                .then()
+            this.topicsService.getTopicList(id)
+                .then(topicPosts => this.$emit('topicPostsLoaded', topicPosts.data))
+                .then(() => this.$emit('topicPostsLoading', false))
+            ;
         }
     }
 };

@@ -4,7 +4,8 @@
         <topics
             @topicLoading="notifyTopicLoading"
             @topicLoaded="passTopicData"
-            @topicPostsLoading="notifyTopicPostsLoading"></topics>
+            @topicPostsLoading="notifyTopicPostsLoading"
+            @topicPostsLoaded="notifyTopicPostsLoaded"></topics>
     </aside>
 </template>
 
@@ -27,6 +28,9 @@ export default {
         },
         passTopicData(topicData) {
             this.$emit('updateTopicData', topicData);
+        },
+        notifyTopicPostsLoaded(topicPosts) {
+            this.$emit('updateTopicPosts', topicPosts);
         }
     }
 };
