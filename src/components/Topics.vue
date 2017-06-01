@@ -3,15 +3,19 @@
         <div class="topic-search-filter">
             <input type="text"
                 class="topics-filter-input"
-                placeholder="Filter Topics" 
-                :model="searchTerm">
+                placeholder="Filter Topics"
+                v-model="searchTerm">
 
             <p class="default-content" v-if="topicsEmpty">
                 Fetching topics...
             </p>
 
+            <p class="no-filtered-topics" v-if="!viewableTopics.length">
+                There are no topics matching "{{searchTerm}}".
+            </p>
+
                     <!-- v-if="filterTopic(searchTerm, topic.slug, topic.name)" -->
-            <div v-for="topic of topics" v-if="!topicsEmpty">
+            <div v-for="topic of viewableTopics" v-if="viewableTopics.length">
                 <div class="topic-name"
                     @click="getTopicPosts(topic.id)">
                         {{topic.name}} ({{topic.count}})
@@ -33,7 +37,14 @@ export default {
     computed: {
         topicsEmpty() {
             return this.topics.length === 0;
-            // return Object.keys(this.topics).length === 0;
+        },
+        viewableTopics() {
+            return this.topics.filter(topic => {
+                let searched = this.searchTerm;
+                return searched
+                    ?!!(topic.slug.match(searched) || topic.name.match(searched))
+                    : true;
+            });
         }
     },
     created(topicsService) {
