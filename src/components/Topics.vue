@@ -10,7 +10,7 @@
                 Fetching topics...
             </p>
 
-            <p class="no-filtered-topics" v-if="!viewableTopics.length">
+            <p class="no-filtered-topics" v-if="!viewableTopics.length && !topicsEmpty">
                 There are no topics matching "{{searchTerm}}".
             </p>
 
@@ -30,10 +30,11 @@ export default {
     name: 'topics',
     data() {
         return {
-            topics: [],
+            // topics: [],
             searchTerm: ''
         };
     },
+    dependencies: ['topicsService'],
     computed: {
         topicsEmpty() {
             return this.topics.length === 0;
@@ -45,27 +46,28 @@ export default {
                     ?!!(topic.slug.match(searched) || topic.name.match(searched))
                     : true;
             });
+        },
+        topics() {
+            return this.$store.state.topics;
         }
     },
-    created(topicsService) {
-        this.topicsService = topicsService;
-        this.$emit('topicLoading', true);
+    created() {
         this.getTopics();
     },
     methods: {
         getTopics() {
             if (this.topicsEmpty) {
                 this.topicsService.getTopics()
-                    .then(topics => this.topics = topics)
-                    .then(() => this.$emit('topicLoading', false))
+                    .then(topics => this.$store.commit('setTopics', topics))
                 ;
             }
         },
         getTopicPosts(id) {
-            this.$emit('topicPostsLoading', true);
+            // this.$emit('topicPostsLoading', true);
+            this.$store.commit('setTopicPostsLoading', true);
             this.topicsService.getTopicList(id)
-                .then(topicPosts => this.$emit('topicPostsLoaded', topicPosts.data))
-                .then(() => this.$emit('topicPostsLoading', false))
+                .then(topicPosts => this.$store.commit('setTopicsPosts', topicPosts.data))
+                .then(() => this.$store.commit('setTopicPostsLoading', false))
             ;
         }
     }

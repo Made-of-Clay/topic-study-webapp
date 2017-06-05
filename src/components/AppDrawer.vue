@@ -1,8 +1,8 @@
 <template>
     <aside class="app-drawer"
         :class="{'is-showing':topicListShowing}">
+            <!-- @topicLoading="notifyTopicLoading" -->
         <topics
-            @topicLoading="notifyTopicLoading"
             @topicLoaded="passTopicData"
             @topicPostsLoading="notifyTopicPostsLoading"
             @topicPostsLoaded="notifyTopicPostsLoaded"></topics>
@@ -19,10 +19,10 @@ export default {
     },
     props: ['topicListShowing'],
     methods: {
-        notifyTopicLoading(isLoading) {
-            // TODO: is this necessary?
-            this.$emit('topicLoading', isLoading);
-        },
+        // notifyTopicLoading(isLoading) {
+        //     // TODO: is this necessary?
+        //     this.$emit('topicLoading', isLoading);
+        // },
         notifyTopicPostsLoading(isLoading) {
             this.$emit('topicPostsLoading', isLoading);
         },
