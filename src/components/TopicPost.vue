@@ -4,6 +4,8 @@
             No topics have been loaded yet!
         </article>
 
+        - {{foo}} -
+
         <article class="card" v-if="posts.length"
             v-for="post of posts">
 
@@ -16,7 +18,35 @@
 <script>
 export default {
     name: 'topic-posts',
-    props: ['posts']
+    data() {
+        return {
+            loading: false,
+            posts: [],
+            foo: ''
+        };
+    },
+    // props: ['posts'],
+    watch: {
+        posts() {
+            let currentTopic = this.$store.state.currentTopic;
+            if (currentTopic.id) {
+                return this.getPosts(currentTopic.id)
+                    // .
+            }
+        },
+        foo() {
+            if (this.$store.state.currentTopic.id) {
+                this.foo = this.$store.state.currentTopic.id;
+            }
+        }
+    },
+    methods: {
+        getPosts() {
+            this.loading = true;
+            this.topicsService.getTopicList(id)
+                .then(posts => this.posts = posts);
+        }
+    }
 };
 </script>
 

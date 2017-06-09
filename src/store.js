@@ -7,7 +7,10 @@ const store = new Vuex.Store({
     state: {
         topics: [],
         topicPosts: [],
-        currentTopic: '',
+        currentTopic: {
+            id: '',
+            name: ''
+        },
         drawerShowing: true,
         topicPostsLoading: false
     },

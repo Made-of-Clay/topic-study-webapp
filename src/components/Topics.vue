@@ -17,9 +17,10 @@
                     <!-- v-if="filterTopic(searchTerm, topic.slug, topic.name)" -->
             <div v-for="topic of viewableTopics" v-if="viewableTopics.length">
                 <div class="topic-name"
-                    @click="getTopicPosts(topic.id)">
-                        {{topic.name}} ({{topic.count}})
-                    </div>
+                    @click="updateCurrentTopic(topic)">
+                    
+                    {{topic.name}} ({{topic.count}})
+                </div>
             </div>
         </div>
     </div>
@@ -62,13 +63,18 @@ export default {
                 ;
             }
         },
-        getTopicPosts(id) {
+        updateCurrentTopic({id, name}) {
             // this.$emit('topicPostsLoading', true);
-            this.$store.commit('setTopicPostsLoading', true);
-            this.topicsService.getTopicList(id)
-                .then(topicPosts => this.$store.commit('setTopicsPosts', topicPosts.data))
-                .then(() => this.$store.commit('setTopicPostsLoading', false))
-            ;
+            // this.$store.commit('setTopicPostsLoading', true);
+            // this.topicsService.getTopicList(id)
+            //     .then(topicPosts => this.$store.commit('setTopicsPosts', topicPosts.data))
+            //     .then(() => this.$store.commit('setTopicPostsLoading', false))
+            // ;
+            console.log('topics updateCurrentTopic')
+            this.$store.commit('setCurrentTopic', {
+                id: id,
+                name: name
+            });
         }
     }
 };

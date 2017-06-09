@@ -6,7 +6,8 @@
             </svg>
         </div>
 
-        <topic-posts :posts="topicPosts"></topic-posts>
+        <!-- <topic-posts :posts="topicPosts"></topic-posts> -->
+        <topic-posts></topic-posts>
     </div>
 </template>
 
