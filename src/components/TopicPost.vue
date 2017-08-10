@@ -22,29 +22,38 @@ export default {
         return {
             loading: false,
             posts: [],
-            foo: ''
+            // foo: ''
         };
     },
     // props: ['posts'],
     watch: {
         posts() {
             let currentTopic = this.$store.state.currentTopic;
+            console.log("currentTopic", currentTopic);
             if (currentTopic.id) {
+                console.log('current topic', currentTopic);
                 return this.getPosts(currentTopic.id)
-                    // .
             }
         },
+        // foo() {
+        //     if (this.$store.state.currentTopic.id) {
+        //         this.foo = this.$store.state.currentTopic.id;
+        //     }
+        // }
+    },
+    computed: {
         foo() {
-            if (this.$store.state.currentTopic.id) {
-                this.foo = this.$store.state.currentTopic.id;
-            }
+            this.getPosts();
+            console.log(this.$store.state.currentTopic);
         }
     },
     methods: {
         getPosts() {
             this.loading = true;
-            this.topicsService.getTopicList(id)
-                .then(posts => this.posts = posts);
+            if (this.topicsService) {
+                this.topicsService.getTopicList(id)
+                    .then(posts => this.posts = posts);
+            }
         }
     }
 };

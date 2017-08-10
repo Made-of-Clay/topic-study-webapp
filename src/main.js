@@ -9,11 +9,13 @@ import TopicsService from './topics.service';
 
 Vue.config.productionTip = false;
 
-// Vue.use(Vuec);
-// Vue.$ioc.register('topicsService', new TopicsService());
-
-Vue.use(injector);
-injector.service('topicsService', TopicsService);
+// Vue.use(injector);
+// injector.service('topicsService', TopicsService);
+Vue.use({
+    install(Vue) {
+        Vue.prototype.topicsService = new TopicsService();
+    }
+});
 
 /* eslint-disable no-new */
 new Vue({
